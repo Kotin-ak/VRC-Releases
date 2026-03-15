@@ -8,8 +8,6 @@
 
 The main screen of the application — a grid of connected device cards with real-time monitoring.
 
-![Dashboard](VRC/dashboard.png)
-
 ### Command Bar
 
 | Action | Shortcut | Description |
