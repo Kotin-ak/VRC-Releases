@@ -1,475 +1,475 @@
-# VRC — Справочник возможностей
+# VRC — Feature Reference
 
-> Руководство пользователя по функциям приложения VRC (Video Recording Control Hub).
-
----
-
-## 1. Дашборд
-
-Главный экран приложения — сетка карточек подключённых устройств с мониторингом в реальном времени.
-
-
-
-### Панель команд
-
-| Действие | Горячая клавиша | Описание |
-|----------|----------------|----------|
-| **Добавить vMix** | `Ctrl+N` | Открывает диалог добавления нового устройства vMix |
-| **Последняя сессия** | — | Загрузка последней сохранённой сессии |
-| **Сохранить пресет** | `Ctrl+S` | Сохранение текущей конфигурации устройств в выбранный пресет |
-| **Размер карточек** | — | Циклическое переключение размера карточек устройств |
-
-В строке состояния отображается имя текущего пресета и количество подключённых устройств.
-
-#### Дополнительные команды (меню «⋯»)
-
-| Действие | Горячая клавиша | Описание |
-|----------|----------------|----------|
-| **Сохранить как…** | `Ctrl+Shift+S` | Сохранение конфигурации под новым именем |
-| **Удалить пресет** | — | Удаление выбранного пресета |
-| **Экспорт пресета** | — | Экспорт пресета в файл для переноса или резервного копирования |
-| **Импорт пресета** | — | Импорт пресета из файла |
-| **Экспорт конфигурации** | — | Экспорт полной конфигурации приложения |
-| **Импорт конфигурации** | — | Импорт полной конфигурации приложения |
-
-### Отображение карточек
-
-- Карточки устройств располагаются в адаптивной сетке, автоматически подстраиваясь под размер окна.
-- **Постраничная навигация** — при большом количестве устройств карточки разбиваются на страницы с переключением через точечный индикатор. Поддерживается прокрутка колёсом мыши.
-
-![Карточки vMix — компактный вид](VRC/Cards%20vMix%203.png)
-
-![Карточки vMix — средний вид](VRC/Cards%20vMix%204.png)
-
-![Карточки vMix — расширенный вид](VRC/Cards%20vMix%205.png)
+> User guide for VRC (Video Recording Control Hub) application features.
 
 ---
 
-## 2. Управление устройствами vMix
+## 1. Dashboard
 
-### Добавление устройства
+The main screen of the application — a grid of connected device cards with real-time monitoring.
 
-![Диалог добавления vMix](Images/Add%20vMix.png)
+![Dashboard](VRC/dashboard.png)
 
-При добавлении нового vMix указываются:
+### Command Bar
 
-- **Название** — произвольное имя (до 20 символов).
-- **IP-адрес** — адрес машины с запущенным vMix.
-- **HTTP-порт** — порт Web API vMix.
-- **TCP-порт** — порт TCP API (настраивается автоматически).
-- **Интервал опроса** — частота обновления данных (250–5000 мс).
-- **Логин и пароль** — учётные данные для авторизации (при необходимости).
-- **Режим транспорта** — способ связи с vMix (HTTP, TCP и др.). При выборе HTTP отображается предупреждение об ограничениях.
-- **Часовой пояс** — привязка часового пояса к устройству для корректного отображения времени при удалённой работе.
+| Action | Shortcut | Description |
+|--------|----------|-------------|
+| **Add vMix** | `Ctrl+N` | Opens the dialog to add a new vMix device |
+| **Last Session** | — | Load the last saved session |
+| **Save Preset** | `Ctrl+S` | Save current device configuration to the selected preset |
+| **Card Size** | — | Cycle through device card sizes |
 
-### Проверка доступности (Probe)
+The status bar displays the current preset name and the number of connected devices.
 
-Перед сохранением можно протестировать соединение с устройством. Результат и подробности отображаются прямо в диалоге.
+#### Additional Commands (overflow menu "⋯")
 
-### Опции подключения
+| Action | Shortcut | Description |
+|--------|----------|-------------|
+| **Save As…** | `Ctrl+Shift+S` | Save configuration under a new name |
+| **Delete Preset** | — | Delete the selected preset |
+| **Export Preset** | — | Export preset to a file for transfer or backup |
+| **Import Preset** | — | Import preset from a file |
+| **Export Configuration** | — | Export full application configuration |
+| **Import Configuration** | — | Import full application configuration |
 
-- **Автоподключение** — автоматическое подключение к устройству при запуске программы.
-- **Автопереподключение** — автоматическое восстановление связи при потере соединения.
+### Card Display
 
-### Действия над устройством
+- Device cards are arranged in an adaptive grid that automatically adjusts to the window size.
+- **Pagination** — when there are many devices, cards are split across pages with a dot indicator for navigation. Mouse wheel scrolling is supported.
 
-Через контекстное меню карточки доступны:
+![vMix Cards — compact view](VRC/Cards%20vMix%203.png)
 
-- **Настройки стриминга** — открытие диалога управления стриминг-каналами.
-- **Редактирование** — изменение параметров подключения.
-- **Настройки WMI** — конфигурация удалённого мониторинга ПК.
-- **Логи** — просмотр журнала событий устройства.
-- **Удаление** — удаление устройства из конфигурации.
-- **Переместить в…** — перемещение устройства между группами.
+![vMix Cards — medium view](VRC/Cards%20vMix%204.png)
+
+![vMix Cards — expanded view](VRC/Cards%20vMix%205.png)
 
 ---
 
-## 3. Карточка устройства
+## 2. vMix Device Management
 
-Каждое подключённое устройство vMix отображается в виде карточки с полной информацией в реальном времени. Ниже подробно описаны все функции управления vMix, доступные непосредственно с карточки.
+### Adding a Device
 
-### 3.1. Заголовок
+![Add vMix dialog](VRC/Add%20vMix.png)
 
-- Название устройства, IP-адрес, режим транспорта.
-- Версия и редакция vMix, название пресета.
-- Часовой пояс устройства.
-- Цветовая индикация статуса подключения.
-- **Контекстное меню (⋯)** — настройки стриминга, редактирование, WMI, логи, удаление, перемещение между группами.
+When adding a new vMix device, the following fields are specified:
 
-### 3.2. Статусные индикаторы
+- **Name** — custom name (up to 20 characters).
+- **IP Address** — address of the machine running vMix.
+- **HTTP Port** — vMix Web API port.
+- **TCP Port** — TCP API port (configured automatically).
+- **Polling Interval** — data refresh rate (250–5000 ms).
+- **Login and Password** — credentials for authorization (if required).
+- **Transport Mode** — communication method with vMix (HTTP, TCP, etc.). A warning about limitations is displayed when HTTP is selected.
+- **Time Zone** — time zone assignment for the device to ensure correct time display during remote operation.
 
-![Статусные индикаторы](VRC/Status%20section.png)
+### Connectivity Check (Probe)
 
-Интерактивные индикаторы — по клику переключают соответствующую функцию vMix:
+Before saving, you can test the connection to the device. The result and details are displayed directly in the dialog.
 
-| Индикатор | Клик | Детализация |
-|-----------|------|-------------|
-| **Streaming** | Пуск/остановка всех каналов | Индивидуальные индикаторы каналов 1–5 (каждый кликабелен). Количество каналов зависит от редакции vMix |
-| **Recording** | Старт/стоп записи | Индикаторы основного и дополнительного рекордера, таймер длительности записи |
-| **Multicorder** | Старт/стоп мультизаписи | Отображается только при поддержке редакцией vMix |
-| **Replay** | Старт/стоп записи Instant Replay | Отображается только при поддержке редакцией vMix |
-| **External** | Вкл/выкл внешнего выхода | Подсказка с деталями конфигурации выходов |
-| **Fullscreen** | Вкл/выкл полноэкранного режима | Подсказка с текущими настройками |
-| **Playlist** | Старт/стоп плейлиста | — |
-| **Overlay** | Отключение всех оверлеев | Индивидуальные индикаторы по каждому слою (кликабельны отдельно) |
+### Connection Options
 
-### 3.3. Программный монитор
+- **Auto-Connect** — automatically connect to the device on application startup.
+- **Auto-Reconnect** — automatically restore the connection when it is lost.
 
-![Программный монитор](VRC/Program%20monitor.png)
+### Device Actions
 
-Секция отображения текущего источника в Program/Preview с аудиоуровнями.
+Available through the card context menu:
 
-#### Выбор источника монитора
-
-Через выпадающее меню или прокруткой колеса мыши:
-
-| Источник | Описание |
-|----------|----------|
-| **Program** | Основной программный выход |
-| **Preview** | Превью (предпросмотр) |
-| **PRV\|PGM** | Автоматический — показывает активный источник |
-| **Output 1–4** | Внешние выходы (Output 3–4 при поддержке) |
-| **Overlay 1–8** | Оверлейные слои (Overlay 5–8 при расширенных оверлеях) |
-
-#### Информационная панель
-
-- **Название текущего входа** — название и метка воспроизводимого источника.
-- **Прогрессбар** — для воспроизводимых источников (видео), с отображением оставшегося времени.
-- **Статус воспроизведения** — иконки Play / Pause / Stop.
-- **Зацикливание (Loop)** — индикатор повтора.
-- **Позиция в списке** — отображение индекса элемента в видеолисте.
-- **Текст титров** — для титровых входов отображается текущий текст.
-
-#### Мастер-аудиометр
-
-- Двухканальный (L/R) вертикальный индикатор уровня Master-шины.
-- Градиент: зелёный (норма) → жёлтый (headroom) → красный (клиппинг).
-- Подсказка с пиковыми значениями (dBFS).
-
-### 3.4. Вкладка Inputs — управление входами
-
-![Секция управления входами](VRC/Inputs%20section.png)
-
-Список всех входов vMix с постраничной навигацией.
-
-#### Для каждого входа доступны:
-
-**Основные действия (кнопки):**
-
-| Действие | Описание |
-|----------|----------|
-| **GO / QuickPlay** | Переход на вход (GO для vMix v29+, QuickPlay для более ранних) |
-| **Cut** | Мгновенное переключение на вход через Cut |
-| **Play / Pause** | Воспроизведение / пауза (для видеовходов) |
-| **Loop** | Вкл/выкл зацикливания воспроизведения |
-| **Mute** | Заглушить / включить звук входа |
-
-**Оверлеи на входе (сетка 4×2):**
-
-- Переключение оверлейных слоёв 1–8 индивидуально по клику.
-- Контекстное меню оверлея для дополнительных действий.
-
-**Контекстное меню входа (правый клик):**
-
-| Действие | Описание |
-|----------|----------|
-| **Active** | Отправить вход в Program |
-| **Preview** | Отправить вход в Preview |
-| **Restart** | Перезапустить воспроизведение (для видео) |
-| **AutoPause** (On/Off) | Авто-пауза при переключении с входа |
-| **AutoPlay** (On/Off) | Авто-воспроизведение при переключении на вход |
-| **AutoRestart** (On/Off) | Авто-перезапуск при завершении |
-| **Video Source** (1–4) | Выбор источника видео для Video Call входов |
-| **Audio Source** | Выбор источника звука для Video Call: Master, Headphones, Bus A–G |
-
-**Индикация:**
-
-- Аудиоуровни (двухканальный L/R метр) для каждого входа.
-- Цветовая рамка: зелёный (Preview) / красный (Program).
-- Иконка типа входа (камера, видео, титры и т.д.).
-
-### 3.5. Вкладка Audio — аудиомикшер
-
-Полнофункциональный аудиомикшер с раздельным управлением мастер-шиной, шинами и входами.
-
-#### Мастер-шина (Master)
-
-| Действие | Описание |
-|----------|----------|
-| **Mute** | Заглушить / включить Master |
-| **Слайдер громкости** | Регулировка уровня Master (0–100%) через всплывающий фейдер |
-| **Аудиометр** | Двухканальный L/R индикатор уровня |
-
-![Аудиомикшер — шины](VRC/Audio%20Outputs%20Section.png)
-
-#### Аудиошины (Bus A–G)
-
-Для каждой доступной шины:
-
-| Действие | Описание |
-|----------|----------|
-| **Mute** | Заглушить / включить шину |
-| **Send to Master (M)** | Маршрутизация шины в мастер |
-| **Слайдер громкости** | Регулировка уровня шины (0–100%) |
-| **Solo (S)** | Соло-прослушивание шины |
-| **Аудиометр** | Двухканальный L/R индикатор уровня |
-
-#### Аудио по входам
-
-![Аудиомикшер — входы](VRC/Audio%20Inputs%20section.png)
-
-Для каждого входа с аудио:
-
-| Действие | Описание |
-|----------|----------|
-| **Mute** | Заглушить / включить звук входа |
-| **AFV** | Audio Follow Video — автоматическое управление звуком при переключении |
-| **Маршрутизация (M, A–G)** | Назначение входа на шины: Master и Bus A–G (индивидуально, по клику) |
-| **Слайдер громкости** | Регулировка уровня входа (0–100%) через всплывающий фейдер |
-| **Solo (S)** | Соло-прослушивание входа |
-| **Аудиометр** | Двухканальный L/R индикатор уровня |
-
-### 3.6. Вкладка List — управление видеолистами
-
-![Секция видеолистов](Images/List%20Section.png)
-
-Управление видеолистами (плейлистами) vMix. Отображается при наличии видеолистов.
-
-#### Информационная панель
-
-- Название текущего списка и его состояние (Playing / Paused / Stopped).
-- Позиция / длительность / оставшееся время.
-- Количество элементов в списке.
-- Прогрессбар воспроизведения.
-
-#### Список элементов
-
-- Отображение всех файлов в списке с длительностью.
-- Цветовое выделение текущего воспроизводимого элемента.
-- Индикатор включённых/отключённых элементов.
-- **Контекстное меню**: Select (выбрать), Remove (удалить из списка).
-
-#### Команды воспроизведения
-
-| Кнопка | Описание |
-|--------|----------|
-| **⏮ Previous** | Предыдущий элемент списка |
-| **⏯ Play / Pause** | Воспроизведение / пауза |
-| **⏭ Next** | Следующий элемент списка |
-| **🔀 Shuffle** | Перемешать список |
-| **🔁 Loop** | Зацикливание списка |
-
-#### Дополнительные команды (меню «⋯»)
-
-| Команда | Описание |
-|---------|----------|
-| **Play Out** | Воспроизведение с автоматическим завершением |
-| **Auto Next** | Автопереход к следующему элементу |
-| **Auto First** | Автовозврат к первому элементу |
-
-#### Навигация между списками
-
-- Переключение между несколькими видеолистами через точечный индикатор (PipsPager).
-
-### 3.7. Вкладка Outputs — управление выходами
-
-![Секция выходов](VRC/Otputs%20section.png)
-
-Детальное отображение и управление выходами vMix.
-
-#### Полноэкранные выходы (Fullscreen)
-
-| Выход | Описание |
-|-------|----------|
-| **Fullscreen 1** | Основной полноэкранный выход — выбор источника через SplitButton |
-| **Fullscreen 2** | Дополнительный полноэкранный выход (при поддержке двух мониторов) |
-
-#### Внешние выходы (Output 1–4)
-
-Для каждого выхода отображаются:
-
-- **Источник** — текущий назначенный источник (с возможностью смены для Output 2–4).
-- **NDI** — статус вещания по NDI (On/Off).
-- **OMT** — статус выхода по OMT (On/Off).
-- **SRT** — статус SRT-вещания (кликабелен для переключения).
-
-> Output 3 и Output 4 отображаются только для редакций vMix с четырьмя внешними выходами.
-
-### 3.8. Вкладка Replay — Instant Replay
-
-Секция для управления Instant Replay (в процессе реализации).
-
-### 3.9. Вкладка Scheduler — расписание устройства
-
-![Секция расписания на карточке](VRC/Scheduler%20section.png)
-
-Компактный список запланированных задач для данного устройства.
-
-- Отображение ближайших задач: время, функция, параметры, статус.
-- Индикатор времени до следующей задачи.
-- Кнопка **Open Scheduler** — переход на полную страницу планировщика.
-
-### 3.10. Подвал карточки
-
-| Элемент | Описание |
-|---------|----------|
-| **🔒 Блокировка (Lock)** | Защита от случайных действий на карточке. При активации кнопки управления блокируются |
-| **🔽 Сворачивание аудио** | Скрытие/показ аудиосекции (с анимацией поворота иконки) |
-| **🔔 Уведомления** | Включение/отключение уведомлений для конкретного устройства (зелёный — вкл, серый — выкл) |
-| **⚠ Ошибки** | Отображение текущих ошибок подключения (красным цветом) |
-| **⏳ Спиннер** | Индикатор загрузки при выполнении операции |
-| **🔘 Переключатель подключения** | Вкл/выкл соединения с устройством |
+- **Streaming Settings** — open the streaming channel management dialog.
+- **Edit** — modify connection parameters.
+- **WMI Settings** — configure remote PC monitoring.
+- **Logs** — view the device event log.
+- **Delete** — remove the device from the configuration.
+- **Move to…** — move the device between groups.
 
 ---
 
-## 4. Мониторинг ПК (PC Health)
+## 3. Device Card
 
-![Мониторинг ПК](VRC/PC%20monitoring%20section.png)
+Each connected vMix device is displayed as a card with full real-time information. Below is a detailed description of all vMix control features available directly from the card.
 
-Удалённый сбор метрик рабочей станции, на которой запущен vMix:
+### 3.1. Header
 
-- **CPU** — загрузка процессора (с выделением критических значений).
-- **GPU 3D** — загрузка видеокарты (3D-рендеринг).
-- **GPU Encode** — загрузка аппаратного видеокодека.
+- Device name, IP address, transport mode.
+- vMix version and edition, preset name.
+- Device time zone.
+- Color-coded connection status indicator.
+- **Context menu (⋯)** — streaming settings, edit, WMI, logs, delete, move between groups.
 
-Данные собираются через **WMI** (Windows Management Instrumentation). Настройки WMI доступны из меню карточки. При недоступности удалённого мониторинга отображается информация об ошибке WMI/RPC.
+### 3.2. Status Indicators
 
-![Настройки WMI-мониторинга](VRC/PC%20monitr%20settings.png)
+![Status indicators](VRC/Status%20section.png)
+
+Interactive indicators — clicking toggles the corresponding vMix function:
+
+| Indicator | Click | Details |
+|-----------|-------|---------|
+| **Streaming** | Start/stop all channels | Individual channel indicators 1–5 (each clickable). Number of channels depends on vMix edition |
+| **Recording** | Start/stop recording | Primary and secondary recorder indicators, recording duration timer |
+| **Multicorder** | Start/stop multi-recording | Displayed only when supported by the vMix edition |
+| **Replay** | Start/stop Instant Replay recording | Displayed only when supported by the vMix edition |
+| **External** | Toggle external output on/off | Tooltip with output configuration details |
+| **Fullscreen** | Toggle fullscreen mode on/off | Tooltip with current settings |
+| **Playlist** | Start/stop playlist | — |
+| **Overlay** | Disable all overlays | Individual indicators per layer (each clickable separately) |
+
+### 3.3. Program Monitor
+
+![Program monitor](VRC/Program%20monitor.png)
+
+Section displaying the current source in Program/Preview with audio levels.
+
+#### Monitor Source Selection
+
+Via the dropdown menu or by scrolling the mouse wheel:
+
+| Source | Description |
+|--------|-------------|
+| **Program** | Main program output |
+| **Preview** | Preview output |
+| **PRV\|PGM** | Automatic — displays the active source |
+| **Output 1–4** | External outputs (Output 3–4 when supported) |
+| **Overlay 1–8** | Overlay layers (Overlay 5–8 with extended overlays) |
+
+#### Information Panel
+
+- **Current input name** — name and label of the playing source.
+- **Progress bar** — for playable sources (video), showing remaining time.
+- **Playback status** — Play / Pause / Stop icons.
+- **Loop** — loop indicator.
+- **List position** — element index display for video lists.
+- **Title text** — current text for title inputs.
+
+#### Master Audio Meter
+
+- Dual-channel (L/R) vertical Master bus level indicator.
+- Gradient: green (normal) → yellow (headroom) → red (clipping).
+- Tooltip with peak values (dBFS).
+
+### 3.4. Inputs Tab — Input Control
+
+![Input control section](VRC/Inputs%20section.png)
+
+List of all vMix inputs with pagination.
+
+#### Available for each input:
+
+**Primary actions (buttons):**
+
+| Action | Description |
+|--------|-------------|
+| **GO / QuickPlay** | Transition to input (GO for vMix v29+, QuickPlay for earlier versions) |
+| **Cut** | Instant switch to input via Cut |
+| **Play / Pause** | Play / pause (for video inputs) |
+| **Loop** | Toggle playback looping on/off |
+| **Mute** | Mute / unmute input audio |
+
+**Input overlays (4×2 grid):**
+
+- Toggle overlay layers 1–8 individually by clicking.
+- Overlay context menu for additional actions.
+
+**Input context menu (right-click):**
+
+| Action | Description |
+|--------|-------------|
+| **Active** | Send input to Program |
+| **Preview** | Send input to Preview |
+| **Restart** | Restart playback (for video) |
+| **AutoPause** (On/Off) | Auto-pause when switching away from the input |
+| **AutoPlay** (On/Off) | Auto-play when switching to the input |
+| **AutoRestart** (On/Off) | Auto-restart on completion |
+| **Video Source** (1–4) | Select video source for Video Call inputs |
+| **Audio Source** | Select audio source for Video Call: Master, Headphones, Bus A–G |
+
+**Indicators:**
+
+- Audio levels (dual-channel L/R meter) for each input.
+- Color-coded border: green (Preview) / red (Program).
+- Input type icon (camera, video, titles, etc.).
+
+### 3.5. Audio Tab — Audio Mixer
+
+Full-featured audio mixer with separate control of the master bus, buses, and inputs.
+
+#### Master Bus
+
+| Action | Description |
+|--------|-------------|
+| **Mute** | Mute / unmute Master |
+| **Volume slider** | Master level adjustment (0–100%) via popup fader |
+| **Audio meter** | Dual-channel L/R level indicator |
+
+![Audio mixer — buses](VRC/Audio%20Outputs%20Section.png)
+
+#### Audio Buses (Bus A–G)
+
+For each available bus:
+
+| Action | Description |
+|--------|-------------|
+| **Mute** | Mute / unmute bus |
+| **Send to Master (M)** | Route bus to master |
+| **Volume slider** | Bus level adjustment (0–100%) |
+| **Solo (S)** | Solo-listen the bus |
+| **Audio meter** | Dual-channel L/R level indicator |
+
+#### Per-Input Audio
+
+![Audio mixer — inputs](VRC/Audio%20Inputs%20section.png)
+
+For each input with audio:
+
+| Action | Description |
+|--------|-------------|
+| **Mute** | Mute / unmute input audio |
+| **AFV** | Audio Follow Video — automatic audio control on switching |
+| **Routing (M, A–G)** | Assign input to buses: Master and Bus A–G (individually, by click) |
+| **Volume slider** | Input level adjustment (0–100%) via popup fader |
+| **Solo (S)** | Solo-listen the input |
+| **Audio meter** | Dual-channel L/R level indicator |
+
+### 3.6. List Tab — Video List Management
+
+![Video list section](VRC/List%20Section.png)
+
+Video list (playlist) management for vMix. Displayed when video lists are present.
+
+#### Information Panel
+
+- Current list name and its state (Playing / Paused / Stopped).
+- Position / duration / remaining time.
+- Number of items in the list.
+- Playback progress bar.
+
+#### Item List
+
+- Display of all files in the list with duration.
+- Color highlight for the currently playing item.
+- Enabled/disabled item indicator.
+- **Context menu**: Select, Remove (remove from list).
+
+#### Playback Controls
+
+| Button | Description |
+|--------|-------------|
+| **⏮ Previous** | Previous list item |
+| **⏯ Play / Pause** | Play / pause |
+| **⏭ Next** | Next list item |
+| **🔀 Shuffle** | Shuffle the list |
+| **🔁 Loop** | Loop the list |
+
+#### Additional Commands (overflow menu "⋯")
+
+| Command | Description |
+|---------|-------------|
+| **Play Out** | Play with automatic completion |
+| **Auto Next** | Auto-advance to the next item |
+| **Auto First** | Auto-return to the first item |
+
+#### List Navigation
+
+- Switch between multiple video lists via the dot indicator (PipsPager).
+
+### 3.7. Outputs Tab — Output Control
+
+![Outputs section](VRC/Otputs%20section.png)
+
+Detailed display and control of vMix outputs.
+
+#### Fullscreen Outputs
+
+| Output | Description |
+|--------|-------------|
+| **Fullscreen 1** | Primary fullscreen output — source selection via SplitButton |
+| **Fullscreen 2** | Secondary fullscreen output (when dual-monitor support is available) |
+
+#### External Outputs (Output 1–4)
+
+For each output, the following is displayed:
+
+- **Source** — currently assigned source (changeable for Output 2–4).
+- **NDI** — NDI streaming status (On/Off).
+- **OMT** — OMT output status (On/Off).
+- **SRT** — SRT streaming status (clickable to toggle).
+
+> Output 3 and Output 4 are displayed only for vMix editions with four external outputs.
+
+### 3.8. Replay Tab — Instant Replay
+
+Section for Instant Replay control (implementation in progress).
+
+### 3.9. Scheduler Tab — Device Schedule
+
+![Scheduler section on card](VRC/Scheduler%20section.png)
+
+Compact list of scheduled tasks for the given device.
+
+- Display of upcoming tasks: time, function, parameters, status.
+- Time-until-next-task indicator.
+- **Open Scheduler** button — navigate to the full scheduler page.
+
+### 3.10. Card Footer
+
+| Element | Description |
+|---------|-------------|
+| **🔒 Lock** | Protection against accidental actions on the card. When active, control buttons are locked |
+| **🔽 Collapse Audio** | Show/hide the audio section (with icon rotation animation) |
+| **🔔 Notifications** | Enable/disable notifications for a specific device (green — on, gray — off) |
+| **⚠ Errors** | Display of current connection errors (in red) |
+| **⏳ Spinner** | Loading indicator while an operation is in progress |
+| **🔘 Connection Toggle** | Enable/disable connection to the device |
 
 ---
 
-## 5. Настройки стриминга
+## 4. PC Health Monitoring
 
-![Настройки стриминга](VRC/Streaming%20settings%20vMix.png)
+![PC monitoring](VRC/PC%20monitoring%20section.png)
 
-Отдельный диалог для управления стриминг-каналами конкретного устройства:
+Remote collection of workstation metrics for the machine running vMix:
 
-- Индивидуальные переключатели (Start/Stop) для каждого канала.
-- Отображение статуса подключения и версии vMix.
-- Информация о редакции и IP-адресе устройства.
+- **CPU** — processor load (with critical value highlighting).
+- **GPU 3D** — graphics card load (3D rendering).
+- **GPU Encode** — hardware video encoder load.
 
----
+Data is collected via **WMI** (Windows Management Instrumentation). WMI settings are accessible from the card menu. When remote monitoring is unavailable, WMI/RPC error information is displayed.
 
-## 6. Планировщик задач (Scheduler)
-
-![Страница планировщика](Images/Scheduler%20Page.png)
-
-Централизованное управление отложенными и повторяющимися командами для всех устройств.
-
-### Создание задачи
-
-- **Название** — произвольное имя задачи.
-- **Устройство** — выбор целевого устройства.
-- **Категория и функция** — выбор команды из иерархического каталога.
-- **Параметры** — дополнительные параметры команды (динамически зависят от выбранной функции).
-- **Расписание** — тип: однократно / ежедневно / еженедельно.
-- **Время и дата** — точный момент выполнения (24-часовой формат).
-- **Попытки** — количество повторных попыток при неудаче (1–10).
-- **Включение/отключение** — индивидуально для каждой задачи.
-
-### Управление задачами
-
-- **Глобальный переключатель** — включение/отключение всего планировщика.
-- **Фильтрация** — по устройству и по статусу.
-- **Вкладки**: все задачи, ближайшие (24 ч), ошибки.
-
-### Массовые действия
-
-| Действие | Описание |
-|----------|----------|
-| **Hold** | Приостановить выбранные задачи |
-| **Run Now** | Немедленно выполнить выбранные задачи |
-| **+5 / +10 / +15 мин** | Отложить выполнение на указанное время |
-| **Cancel** | Отменить выбранные задачи |
-| **Restore** | Восстановить отменённые задачи |
-
-### Дополнительно
-
-![Планировщик — список задач](VRC/scheduler.png)
-
-- Индикация отключённых устройств в списке задач.
-- Баннер-предупреждение при выключенном планировщике.
-- Отображение результата последнего выполнения в панели деталей.
+![WMI monitoring settings](VRC/PC%20monitr%20settings.png)
 
 ---
 
-## 7. Настройки приложения
+## 5. Streaming Settings
 
-### Общие
+![Streaming settings](VRC/Streaming%20settings%20vMix.png)
 
-![Настройки — общие](VRC/Settings%20aplication.png)
+A dedicated dialog for managing streaming channels of a specific device:
 
-| Параметр | Описание |
-|----------|----------|
-| **Язык** | Выбор языка интерфейса (русский / английский) |
-| **Сворачивание в трей** | Приложение сворачивается в системный трей вместо панели задач |
-| **Автозапуск** | Автозапуск приложения при входе в Windows |
-| **Несколько экземпляров** | Разрешение запуска нескольких копий программы |
-
-### Уведомления
-
-| Параметр | Описание |
-|----------|----------|
-| **Уведомления** | Включение/отключение Windows Toast-уведомлений |
-| **Режим** | Все / Критические / Трансляция / Выкл |
-| **Уведомления о подключении** | Оповещения при подключении/отключении устройств |
-| **Беззвучный режим** | Подавление звука уведомлений |
-
-### Веб-панель (Web Dashboard)
-
-![Настройки — веб-панель](VRC/Settings%20Web-dashboard.png)
-
-| Параметр | Описание |
-|----------|----------|
-| **Включение** | Активация встроенного веб-сервера |
-| **Порт** | Настройка порта (1–65535) |
-| **Локальный URL** | Ссылка на панель для данного ПК |
-| **LAN-адреса** | Список адресов для доступа из локальной сети |
-
-### Логи и диагностика
-
-![Настройки — логи и диагностика](VRC/Settings%20logs.png)
-
-| Параметр | Описание |
-|----------|----------|
-| **Журналы устройств** | Открытие папки с логами устройств |
-| **GC Monitor** | Статус и логи мониторинга сборщика мусора |
-
-### О программе
-
-![Настройки — о программе](VRC/Settings%20about%20the%20%20program.png)
-
-| Параметр | Описание |
-|----------|----------|
-| **Версия** | Текущая версия приложения |
-| **Обновления** | Проверка, загрузка и установка обновлений с прогрессом |
-| **Заметки к релизу** | Ссылка на страницу релиза |
-| **Сброс настроек** | Возврат всех настроек к значениям по умолчанию |
+- Individual toggles (Start/Stop) for each channel.
+- Connection status and vMix version display.
+- Edition and IP address information.
 
 ---
 
-## 8. Веб-панель (Web Dashboard)
+## 6. Task Scheduler
 
-![Веб-панель — интерфейс](VRC/Web-dashboard.png)
+![Scheduler page](VRC/Scheduler%20Page.png)
 
-Встроенный read-only дашборд, доступный из любого браузера в локальной сети.
+Centralized management of deferred and recurring commands for all devices.
 
-- **Обновления в реальном времени** через SignalR с автоматическим переподключением.
-- Отображение всех подключённых устройств с индикаторами:
-  - **REC** — запись.
-  - **STREAM** — стриминг.
-  - **EXT** — внешний выход.
-  - **MCR** — мультикордер.
-  - **FS** — полноэкранный режим.
+### Task Creation
+
+- **Name** — custom task name.
+- **Device** — target device selection.
+- **Category and Function** — command selection from a hierarchical catalog.
+- **Parameters** — additional command parameters (dynamically dependent on the selected function).
+- **Schedule** — type: one-time / daily / weekly.
+- **Time and Date** — exact execution moment (24-hour format).
+- **Retries** — number of retry attempts on failure (1–10).
+- **Enable/Disable** — individually per task.
+
+### Task Management
+
+- **Global toggle** — enable/disable the entire scheduler.
+- **Filtering** — by device and by status.
+- **Tabs**: all tasks, upcoming (24 h), errors.
+
+### Bulk Actions
+
+| Action | Description |
+|--------|-------------|
+| **Hold** | Suspend selected tasks |
+| **Run Now** | Immediately execute selected tasks |
+| **+5 / +10 / +15 min** | Postpone execution by the specified time |
+| **Cancel** | Cancel selected tasks |
+| **Restore** | Restore canceled tasks |
+
+### Additional Details
+
+![Scheduler — task list](VRC/scheduler.png)
+
+- Indication of disconnected devices in the task list.
+- Warning banner when the scheduler is disabled.
+- Last execution result display in the details panel.
+
+---
+
+## 7. Application Settings
+
+### General
+
+![Settings — general](VRC/Settings%20aplication.png)
+
+| Parameter | Description |
+|-----------|-------------|
+| **Language** | Interface language selection (Russian / English) |
+| **Minimize to Tray** | Application minimizes to the system tray instead of the taskbar |
+| **Auto-Start** | Auto-launch the application on Windows login |
+| **Multiple Instances** | Allow running multiple copies of the application |
+
+### Notifications
+
+| Parameter | Description |
+|-----------|-------------|
+| **Notifications** | Enable/disable Windows Toast notifications |
+| **Mode** | All / Critical / Broadcast / Off |
+| **Connection Notifications** | Alerts on device connect/disconnect |
+| **Silent Mode** | Suppress notification sounds |
+
+### Web Dashboard
+
+![Settings — web dashboard](VRC/Settings%20Web-dashboard.png)
+
+| Parameter | Description |
+|-----------|-------------|
+| **Enable** | Activate the built-in web server |
+| **Port** | Port configuration (1–65535) |
+| **Local URL** | Link to the dashboard for this PC |
+| **LAN Addresses** | List of addresses for LAN access |
+
+### Logs and Diagnostics
+
+![Settings — logs and diagnostics](VRC/Settings%20logs.png)
+
+| Parameter | Description |
+|-----------|-------------|
+| **Device Logs** | Open the device log folder |
+| **GC Monitor** | Garbage collector monitoring status and logs |
+
+### About
+
+![Settings — about](VRC/Settings%20about%20the%20%20program.png)
+
+| Parameter | Description |
+|-----------|-------------|
+| **Version** | Current application version |
+| **Updates** | Check, download, and install updates with progress |
+| **Release Notes** | Link to the release page |
+| **Reset Settings** | Restore all settings to defaults |
+
+---
+
+## 8. Web Dashboard
+
+![Web dashboard — interface](VRC/Web-dashboard.png)
+
+Built-in read-only dashboard accessible from any browser on the local network.
+
+- **Real-time updates** via SignalR with automatic reconnection.
+- Display of all connected devices with indicators:
+  - **REC** — recording.
+  - **STREAM** — streaming.
+  - **EXT** — external output.
+  - **MCR** — multicorder.
+  - **FS** — fullscreen mode.
   - **FTB** — Fade to Black.
-- **Аудиометры** — визуализация уровня звука.
-- Доступ из локальной сети по настраиваемому порту.
+- **Audio meters** — audio level visualization.
+- LAN access via a configurable port.
 
 ---
 
-## 9. Навигация
+## 9. Navigation
 
-- Левая боковая панель с древовидной структурой устройств (группы и подгруппы).
-- Быстрый доступ к **Настройкам** через встроенную кнопку навигации.
-- Отдельная страница **Scheduler** для глобального управления всеми задачами.
-- Кэширование страниц — состояние сохраняется при переключении между разделами.
+- Left sidebar with a tree structure of devices (groups and subgroups).
+- Quick access to **Settings** via the built-in navigation button.
+- Dedicated **Scheduler** page for global management of all tasks.
+- Page caching — state is preserved when switching between sections.
