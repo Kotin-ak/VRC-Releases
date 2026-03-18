@@ -37,11 +37,11 @@ The status bar displays the current preset name and the number of connected devi
 - Device cards are arranged in an adaptive grid that automatically adjusts to the window size.
 - **Pagination** — when there are many devices, cards are split across pages with a dot indicator for navigation. Mouse wheel scrolling is supported.
 
-![vMix Cards — compact view](Images/Cards%20vMix%203.png)
+![vMix Cards — compact view](VRC/Cards%20vMix%203.png)
 
-![vMix Cards — medium view](Images/Cards%20vMix%204.png)
+![vMix Cards — medium view](VRC/Cards%20vMix%204.png)
 
-![vMix Cards — expanded view](Images/Cards%20vMix%205.png)
+![vMix Cards — expanded view](VRC/Cards%20vMix%205.png)
 
 ---
 
@@ -49,7 +49,7 @@ The status bar displays the current preset name and the number of connected devi
 
 ### Adding a Device
 
-![Add vMix dialog](Images/Add%20vMix.png)
+![Add vMix dialog](VRC/Add%20vMix.png)
 
 When adding a new vMix device, the following fields are specified:
 
@@ -98,7 +98,7 @@ Each connected vMix device is displayed as a card with full real-time informatio
 
 ### 3.2. Status Indicators
 
-![Status indicators](Images/Status%20section.png)
+![Status indicators](VRC/Status%20section.png)
 
 Interactive indicators — clicking toggles the corresponding vMix function:
 
@@ -115,7 +115,7 @@ Interactive indicators — clicking toggles the corresponding vMix function:
 
 ### 3.3. Program Monitor
 
-![Program monitor](Images/Program%20monitor.png)
+![Program monitor](VRC/Program%20monitor.png)
 
 Section displaying the current source in Program/Preview with audio levels.
 
@@ -148,7 +148,7 @@ Via the dropdown menu or by scrolling the mouse wheel:
 
 ### 3.4. Inputs Tab — Input Control
 
-![Input control section](Images/Inputs%20section.png)
+![Input control section](VRC/Inputs%20section.png)
 
 List of all vMix inputs with pagination.
 
@@ -200,7 +200,7 @@ Full-featured audio mixer with separate control of the master bus, buses, and in
 | **Volume slider** | Master level adjustment (0–100%) via popup fader |
 | **Audio meter** | Dual-channel L/R level indicator |
 
-![Audio mixer — buses](Images/Audio%20Outputs%20Section.png)
+![Audio mixer — buses](VRC/Audio%20Outputs%20Section.png)
 
 #### Audio Buses (Bus A–G)
 
@@ -216,7 +216,7 @@ For each available bus:
 
 #### Per-Input Audio
 
-![Audio mixer — inputs](Images/Audio%20Inputs%20section.png)
+![Audio mixer — inputs](VRC/Audio%20Inputs%20section.png)
 
 For each input with audio:
 
@@ -231,7 +231,7 @@ For each input with audio:
 
 ### 3.6. List Tab — Video List Management
 
-![Video list section](Images/List%20Section.png)
+![Video list section](VRC/List%20Section.png)
 
 Video list (playlist) management for vMix. Displayed when video lists are present.
 
@@ -273,7 +273,7 @@ Video list (playlist) management for vMix. Displayed when video lists are presen
 
 ### 3.7. Outputs Tab — Output Control
 
-![Outputs section](Images/Otputs%20section.png)
+![Outputs section](VRC/Otputs%20section.png)
 
 Detailed display and control of vMix outputs.
 
@@ -301,7 +301,7 @@ Section for Instant Replay control (implementation in progress).
 
 ### 3.9. Scheduler Tab — Device Schedule
 
-![Scheduler section on card](Images/Scheduler%20section.png)
+![Scheduler section on card](VRC/Scheduler%20section.png)
 
 Compact list of scheduled tasks for the given device.
 
@@ -324,7 +324,7 @@ Compact list of scheduled tasks for the given device.
 
 ## 4. PC Health Monitoring
 
-![PC monitoring](Images/PC%20monitoring%20section.png)
+![PC monitoring](VRC/PC%20monitoring%20section.png)
 
 Remote collection of workstation metrics for the machine running vMix:
 
@@ -334,13 +334,13 @@ Remote collection of workstation metrics for the machine running vMix:
 
 Data is collected via **WMI** (Windows Management Instrumentation). WMI settings are accessible from the card menu. When remote monitoring is unavailable, WMI/RPC error information is displayed.
 
-![WMI monitoring settings](Images/PC%20monitr%20settings.png)
+![WMI monitoring settings](VRC/PC%20monitr%20settings.png)
 
 ---
 
 ## 5. Streaming Settings
 
-![Streaming settings](Images/Streaming%20settings%20vMix.png)
+![Streaming settings](VRC/Streaming%20settings%20vMix.png)
 
 A dedicated dialog for managing streaming channels of a specific device:
 
@@ -352,7 +352,7 @@ A dedicated dialog for managing streaming channels of a specific device:
 
 ## 6. Task Scheduler
 
-![Scheduler page](Images/Scheduler%20Page.png)
+![Scheduler page](VRC/Scheduler%20Page.png)
 
 Centralized management of deferred and recurring commands for all devices.
 
@@ -385,7 +385,7 @@ Centralized management of deferred and recurring commands for all devices.
 
 ### Additional Details
 
-![Scheduler — task list](Images/scheduler.png)
+![Scheduler — task list](VRC/scheduler.png)
 
 - Indication of disconnected devices in the task list.
 - Warning banner when the scheduler is disabled.
@@ -395,7 +395,7 @@ Centralized management of deferred and recurring commands for all devices.
 
 ## 7. Shortcuts (External Controller Integration)
 
-![Shortcuts page](Images/Shortcuts.png)
+![Shortcuts page](VRC/Shortcuts.png)
 
 Binding external controller buttons (Stream Deck, Companion, Touch Portal, etc.) to VRC device commands. All configuration is done entirely within VRC — the external device acts as a "thin client" that only reports button presses.
 
@@ -403,7 +403,7 @@ Binding external controller buttons (Stream Deck, Companion, Touch Portal, etc.)
 
 ### How It Works
 
-![Stream Deck integration](Images/StreamDeck.jpg)
+![Stream Deck integration](VRC/StreamDeck.jpg)
 
 1. The user drags a "VRC Control" action onto a Stream Deck button — **done**. No additional setup is required on the controller side.
 2. The button automatically receives a unique ID (the action UUID from the Stream Deck SDK).
@@ -416,7 +416,7 @@ Binding external controller buttons (Stream Deck, Companion, Touch Portal, etc.)
 
 ### Page Layout
 
-![Shortcuts demo](Images/ShortcutsDemo.png)
+![Shortcuts demo](VRC/ShortcutsDemo.png)
 
 Master-detail layout (similar to the Scheduler page).
 
@@ -499,7 +499,7 @@ A modal dialog for detecting external controller buttons:
 
 ### General
 
-![Settings — general](Images/Settings%20aplication.png)
+![Settings — general](VRC/Settings%20aplication.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -519,7 +519,7 @@ A modal dialog for detecting external controller buttons:
 
 ### Web Dashboard
 
-![Settings — web dashboard](Images/Settings%20Web-dashboard.png)
+![Settings — web dashboard](VRC/Settings%20Web-dashboard.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -530,7 +530,7 @@ A modal dialog for detecting external controller buttons:
 
 ### Logs and Diagnostics
 
-![Settings — logs and diagnostics](Images/Settings%20logs.png)
+![Settings — logs and diagnostics](VRC/Settings%20logs.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -552,7 +552,7 @@ A modal dialog for detecting external controller buttons:
 
 ## 9. Web Dashboard
 
-![Web dashboard — interface](Images/web-dashboard.png)
+![Web dashboard — interface](VRC/web-dashboard.png)
 
 Built-in read-only dashboard accessible from any browser on the local network.
 
