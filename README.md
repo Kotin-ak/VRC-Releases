@@ -8,6 +8,8 @@
 
 The main screen of the application — a grid of connected device cards with real-time monitoring.
 
+![Dashboard](VRC/dashboard.png)
+
 ### Command Bar
 
 | Action | Shortcut | Description |
@@ -35,11 +37,11 @@ The status bar displays the current preset name and the number of connected devi
 - Device cards are arranged in an adaptive grid that automatically adjusts to the window size.
 - **Pagination** — when there are many devices, cards are split across pages with a dot indicator for navigation. Mouse wheel scrolling is supported.
 
-![vMix Cards — compact view](VRC/Cards%20vMix%203.png)
+![vMix Cards — compact view](Images/Cards%20vMix%203.png)
 
-![vMix Cards — medium view](VRC/Cards%20vMix%204.png)
+![vMix Cards — medium view](Images/Cards%20vMix%204.png)
 
-![vMix Cards — expanded view](VRC/Cards%20vMix%205.png)
+![vMix Cards — expanded view](Images/Cards%20vMix%205.png)
 
 ---
 
@@ -47,7 +49,7 @@ The status bar displays the current preset name and the number of connected devi
 
 ### Adding a Device
 
-![Add vMix dialog](VRC/Add%20vMix.png)
+![Add vMix dialog](Images/Add%20vMix.png)
 
 When adding a new vMix device, the following fields are specified:
 
@@ -96,7 +98,7 @@ Each connected vMix device is displayed as a card with full real-time informatio
 
 ### 3.2. Status Indicators
 
-![Status indicators](VRC/Status%20section.png)
+![Status indicators](Images/Status%20section.png)
 
 Interactive indicators — clicking toggles the corresponding vMix function:
 
@@ -113,7 +115,7 @@ Interactive indicators — clicking toggles the corresponding vMix function:
 
 ### 3.3. Program Monitor
 
-![Program monitor](VRC/Program%20monitor.png)
+![Program monitor](Images/Program%20monitor.png)
 
 Section displaying the current source in Program/Preview with audio levels.
 
@@ -146,7 +148,7 @@ Via the dropdown menu or by scrolling the mouse wheel:
 
 ### 3.4. Inputs Tab — Input Control
 
-![Input control section](VRC/Inputs%20section.png)
+![Input control section](Images/Inputs%20section.png)
 
 List of all vMix inputs with pagination.
 
@@ -198,7 +200,7 @@ Full-featured audio mixer with separate control of the master bus, buses, and in
 | **Volume slider** | Master level adjustment (0–100%) via popup fader |
 | **Audio meter** | Dual-channel L/R level indicator |
 
-![Audio mixer — buses](VRC/Audio%20Outputs%20Section.png)
+![Audio mixer — buses](Images/Audio%20Outputs%20Section.png)
 
 #### Audio Buses (Bus A–G)
 
@@ -214,7 +216,7 @@ For each available bus:
 
 #### Per-Input Audio
 
-![Audio mixer — inputs](VRC/Audio%20Inputs%20section.png)
+![Audio mixer — inputs](Images/Audio%20Inputs%20section.png)
 
 For each input with audio:
 
@@ -229,7 +231,7 @@ For each input with audio:
 
 ### 3.6. List Tab — Video List Management
 
-![Video list section](VRC/List%20Section.png)
+![Video list section](Images/List%20Section.png)
 
 Video list (playlist) management for vMix. Displayed when video lists are present.
 
@@ -271,7 +273,7 @@ Video list (playlist) management for vMix. Displayed when video lists are presen
 
 ### 3.7. Outputs Tab — Output Control
 
-![Outputs section](VRC/Otputs%20section.png)
+![Outputs section](Images/Otputs%20section.png)
 
 Detailed display and control of vMix outputs.
 
@@ -299,7 +301,7 @@ Section for Instant Replay control (implementation in progress).
 
 ### 3.9. Scheduler Tab — Device Schedule
 
-![Scheduler section on card](VRC/Scheduler%20section.png)
+![Scheduler section on card](Images/Scheduler%20section.png)
 
 Compact list of scheduled tasks for the given device.
 
@@ -322,7 +324,7 @@ Compact list of scheduled tasks for the given device.
 
 ## 4. PC Health Monitoring
 
-![PC monitoring](VRC/PC%20monitoring%20section.png)
+![PC monitoring](Images/PC%20monitoring%20section.png)
 
 Remote collection of workstation metrics for the machine running vMix:
 
@@ -332,13 +334,13 @@ Remote collection of workstation metrics for the machine running vMix:
 
 Data is collected via **WMI** (Windows Management Instrumentation). WMI settings are accessible from the card menu. When remote monitoring is unavailable, WMI/RPC error information is displayed.
 
-![WMI monitoring settings](VRC/PC%20monitr%20settings.png)
+![WMI monitoring settings](Images/PC%20monitr%20settings.png)
 
 ---
 
 ## 5. Streaming Settings
 
-![Streaming settings](VRC/Streaming%20settings%20vMix.png)
+![Streaming settings](Images/Streaming%20settings%20vMix.png)
 
 A dedicated dialog for managing streaming channels of a specific device:
 
@@ -350,7 +352,7 @@ A dedicated dialog for managing streaming channels of a specific device:
 
 ## 6. Task Scheduler
 
-![Scheduler page](VRC/Scheduler%20Page.png)
+![Scheduler page](Images/Scheduler%20Page.png)
 
 Centralized management of deferred and recurring commands for all devices.
 
@@ -383,7 +385,7 @@ Centralized management of deferred and recurring commands for all devices.
 
 ### Additional Details
 
-![Scheduler — task list](VRC/scheduler.png)
+![Scheduler — task list](Images/scheduler.png)
 
 - Indication of disconnected devices in the task list.
 - Warning banner when the scheduler is disabled.
@@ -391,11 +393,113 @@ Centralized management of deferred and recurring commands for all devices.
 
 ---
 
-## 7. Application Settings
+## 7. Shortcuts (External Controller Integration)
+
+![Shortcuts page](Images/Shortcuts.png)
+
+Binding external controller buttons (Stream Deck, Companion, Touch Portal, etc.) to VRC device commands. All configuration is done entirely within VRC — the external device acts as a "thin client" that only reports button presses.
+
+> The approach mirrors the vMix Shortcuts model: no configuration is needed on the controller side.
+
+### How It Works
+
+![Stream Deck integration](Images/StreamDeck.jpg)
+
+1. The user drags a "VRC Control" action onto a Stream Deck button — **done**. No additional setup is required on the controller side.
+2. The button automatically receives a unique ID (the action UUID from the Stream Deck SDK).
+3. The plugin connects to VRC's local Control API (`localhost:5101`) via SignalR.
+4. In VRC, the user opens **Shortcuts** and creates a new shortcut by clicking **Add**.
+5. The **Find Control** dialog opens — the user presses a physical button on the controller.
+6. VRC captures the button ID and creates a `ShortcutEntry` linked to that key.
+7. The user configures the command: **Device → Category → Function → Parameters**.
+8. When the button is pressed during operation, VRC looks up the shortcut by key and executes the bound command on the target device.
+
+### Page Layout
+
+![Shortcuts demo](Images/ShortcutsDemo.png)
+
+Master-detail layout (similar to the Scheduler page).
+
+#### Command Bar
+
+| Action | Description |
+|--------|-------------|
+| **Add** | Create a new shortcut (opens the detail panel in creation mode) |
+
+#### Master Panel (Left — Shortcut List)
+
+- **Device filter** — filter shortcuts by target device (ComboBox with an "All devices" option).
+- Table columns: checkbox (enabled/disabled), status indicator, Key, Device, Function, Title.
+- Row selection highlights the item and loads it into the detail panel.
+- Clicking an empty area deselects the current shortcut.
+- **Reorder arrows** (▲ / ▼) — move the selected shortcut up or down in the list.
+
+#### Detail Panel (Right — Shortcut Editor)
+
+When no shortcut is selected, an empty state is displayed with a prompt to select or create a shortcut.
+
+When a shortcut is selected or being created:
+
+| Field | Description |
+|-------|-------------|
+| **Key** | External button identifier (read-only, set via Find Control) |
+| **Find Control** | Opens the button detection dialog |
+| **Title** | Human-readable name for the shortcut |
+| **Device** | Target device for command execution |
+| **Category** | Command category from the hierarchical catalog |
+| **Function** | Specific function within the category |
+| **Parameters** | Dynamic parameters dependent on the selected function |
+| **Enabled** | Toggle switch to enable/disable the shortcut |
+
+#### Feedback Settings
+
+Configures visual feedback sent back to the external controller button.
+
+| Field | Description |
+|-------|-------------|
+| **Event** | ACTS event type for feedback (e.g., Recording, Streaming, Input, Overlay, etc.) |
+| **Input Number** | Input number for input-bound events (shown only for relevant event types) |
+| **Color** | Feedback color for the button when the event is active (8 preset colors with a palette picker) |
+
+Available feedback events:
+
+| Category | Events |
+|----------|--------|
+| **Global** | Recording, Streaming, External, Fullscreen, FadeToBlack, MasterAudio, Bus A–G Audio |
+| **Input-bound** | Input (Program), InputPreview, InputPlaying, InputAudio, InputSolo, InputLoop, Input Bus routing (A–G, Master), InputAudioAuto |
+| **Overlays** | Overlay 1–8 |
+
+#### Action Buttons
+
+| Button | Description |
+|--------|-------------|
+| **Save** | Save the shortcut configuration |
+| **Cancel** | Cancel creation (visible only in creation mode) |
+| **Delete** | Delete the selected shortcut |
+
+### Find Control Dialog
+
+A modal dialog for detecting external controller buttons:
+
+1. Displays a progress ring and a prompt: "Press a button on your controller…"
+2. When a button press is received via SignalR (`IdentifyButton`), the dialog shows the captured button ID.
+3. The user confirms with OK — the key is assigned to the shortcut.
+
+> The `IdentifyButton` method is separate from `execute` — pressing a button during detection does **not** trigger the bound command.
+
+### Shortcut Execution Flow
+
+1. External device sends `POST /api/shortcuts/execute { "buttonId": "uuid" }` to `localhost:5101`.
+2. VRC: `ShortcutExecutor.ExecuteByKeyAsync(buttonId)` → `ShortcutStore.FindByKey` → check `IsEnabled` → `DeviceManager.GetDeviceById` → `DeviceClient.SendAsync(DeviceCommand)`.
+3. If feedback is configured, VRC sends the current state back to the controller via SignalR.
+
+---
+
+## 8. Application Settings
 
 ### General
 
-![Settings — general](VRC/Settings%20aplication.png)
+![Settings — general](Images/Settings%20aplication.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -415,7 +519,7 @@ Centralized management of deferred and recurring commands for all devices.
 
 ### Web Dashboard
 
-![Settings — web dashboard](VRC/Settings%20Web-dashboard.png)
+![Settings — web dashboard](Images/Settings%20Web-dashboard.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -426,7 +530,7 @@ Centralized management of deferred and recurring commands for all devices.
 
 ### Logs and Diagnostics
 
-![Settings — logs and diagnostics](VRC/Settings%20logs.png)
+![Settings — logs and diagnostics](Images/Settings%20logs.png)
 
 | Parameter | Description |
 |-----------|-------------|
@@ -446,9 +550,9 @@ Centralized management of deferred and recurring commands for all devices.
 
 ---
 
-## 8. Web Dashboard
+## 9. Web Dashboard
 
-![Web dashboard — interface](VRC/Web-dashboard.png)
+![Web dashboard — interface](Images/web-dashboard.png)
 
 Built-in read-only dashboard accessible from any browser on the local network.
 
@@ -465,9 +569,10 @@ Built-in read-only dashboard accessible from any browser on the local network.
 
 ---
 
-## 9. Navigation
+## 10. Navigation
 
 - Left sidebar with a tree structure of devices (groups and subgroups).
 - Quick access to **Settings** via the built-in navigation button.
 - Dedicated **Scheduler** page for global management of all tasks.
+- Dedicated **Shortcuts** page for external controller button bindings.
 - Page caching — state is preserved when switching between sections.
