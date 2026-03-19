@@ -4,6 +4,48 @@
 
 ---
 
+## 0. Installation (MSIX)
+
+VRC is distributed as an MSIX package. Because the package is signed with a self-signed certificate, you need to install the certificate before installing the application.
+
+### Step 1 — Install the Certificate
+
+> Administrator rights are required.
+
+1. Open the `.msix` file properties and export the signing certificate, or locate the separate `.cer` file provided alongside the installer.
+
+2. Run the **Certificate Import Wizard** (`certlm.msc` or right-click the `.cer` → *Install Certificate*).
+
+   ![Launch certificate installation](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0.png)
+
+3. Select **Local Machine** as the store location.
+
+   ![Store location — Local Machine](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%A0%D0%B0%D1%81%D0%BF%D0%BE%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5%20-%20%D0%9B%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BE%D0%BC%D0%BF%D1%8C%D1%8E%D1%82%D0%B5%D1%80.png)
+
+4. Choose **Place all certificates in the following store** and browse to **Trusted People**.
+
+   ![Place all certificates in the following store](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%9F%D0%BE%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D1%82%D1%8C%20%D0%B2%D1%81%D0%B5%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D1%8B%20%D0%B2%20%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D1%8E%D1%89%D0%B5%D0%B5%20%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D0%BB%D0%B8%D1%89%D0%B5.png)
+
+   ![Trusted People store](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%94%D0%BE%D0%B2%D0%B5%D1%80%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BB%D0%B8%D1%86%D0%B0%20(Trusted%20People).png)
+
+5. Complete the wizard and confirm the successful import.
+
+   ![Completing the Certificate Import Wizard](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%97%D0%B0%D0%B2%D0%B5%D1%80%D1%88%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B0%20%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D0%B2.png)
+
+   ![Import result](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%B0/%D0%A0%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82%20%D0%B8%D0%BC%D0%BF%D0%BE%D1%80%D1%82%D0%B0.png)
+
+### Step 2 — Install the Application
+
+1. Double-click the `.msix` file to launch the installer.
+
+   ![Launch installation](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F/%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA%20%D1%83%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B8.png)
+
+2. Review the package contents and click **Install**.
+
+   ![Package contents](Images/Installing%20the%20app%20MSIX/%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0%20%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F/%D0%A1%D0%BE%D1%81%D1%82%D0%B0%D0%B2%20%D0%BF%D0%B0%D0%BA%D0%B5%D1%82%D0%B0.png)
+
+---
+
 ## 1. Dashboard
 
 The main screen of the application — a grid of connected device cards with real-time monitoring.
@@ -408,6 +450,8 @@ Binding external controller buttons (Stream Deck, Companion, Touch Portal, etc.)
 
 ### Page Layout
 
+![Shortcuts page — full view](Images/ShortcutsPage.png)
+
 ![Shortcuts demo](Images/ShortcutsDemo.png)
 
 Master-detail layout (similar to the Scheduler page).
@@ -489,6 +533,8 @@ A modal dialog for detecting external controller buttons:
 
 ## 8. Application Settings
 
+![Settings](Images/Settings.png)
+
 ### General
 
 ![Settings — general](Images/SettingsAplication.png)
@@ -539,6 +585,17 @@ A modal dialog for detecting external controller buttons:
 | **Updates** | Check, download, and install updates with progress |
 | **Release Notes** | Link to the release page |
 | **Reset Settings** | Restore all settings to defaults |
+
+### Control App
+
+![Settings — control app](Images/SettingsControlApp.png)
+
+Configuration of the built-in Control API server used by external controllers (Stream Deck, Companion, Touch Portal, etc.).
+
+| Parameter | Description |
+|-----------|-------------|
+| **Enable** | Activate the Control API server |
+| **Port** | Port for the Control API (default: `5101`) |
 
 ---
 
