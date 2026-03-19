@@ -318,7 +318,7 @@ Compact list of scheduled tasks for the given device.
 
 ## 4. PC Health Monitoring
 
-![PC monitoring](Images/PCMonitoringsSection.png)
+![PC monitoring](Images/PCMonitoringSection.png)
 
 Remote collection of workstation metrics for the machine running vMix:
 
