@@ -346,8 +346,6 @@ A dedicated dialog for managing streaming channels of a specific device:
 
 ## 6. Task Scheduler
 
-![Scheduler page](Images/SchedulerPage.png)
-
 Centralized management of deferred and recurring commands for all devices.
 
 ### Task Creation
