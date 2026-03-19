@@ -375,14 +375,6 @@ Centralized management of deferred and recurring commands for all devices.
 | **Cancel** | Cancel selected tasks |
 | **Restore** | Restore canceled tasks |
 
-### Additional Details
-
-![Scheduler — task list](Images/SchedulerSecton.png)
-
-- Indication of disconnected devices in the task list.
-- Warning banner when the scheduler is disabled.
-- Last execution result display in the details panel.
-
 ---
 
 ## 7. Shortcuts (External Controller Integration)
