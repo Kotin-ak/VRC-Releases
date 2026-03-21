@@ -31,27 +31,32 @@ The main screen of the application — a grid of connected device cards with rea
 
 ![Dashboard](Images/Dashboard.png)
 
-### Command Bar
+### Command Bar (Workspace Management)
 
-| Action | Shortcut | Description |
-|--------|----------|-------------|
-| **Add vMix** | `Ctrl+N` | Opens the dialog to add a new vMix device |
-| **Last Session** | — | Load the last saved session |
-| **Save Preset** | `Ctrl+S` | Save current device configuration to the selected preset |
-| **Card Size** | — | Cycle through device card sizes |
+**What are Presets and Configurations?**
+* **Preset:** A saved group of vMix machines (your specific workspace). If you travel between different venues, you can save a preset for "Studio A" and another for "Away Tournament". Load a preset, and VRC instantly connects to the exact vMix nodes for that location without requiring you to re-enter IP addresses manually.
+* **Configuration:** A master backup of your VRC application, including *all* your presets and global settings. Use this to quickly clone your entire VRC setup to a secondary or backup control laptop.
+
+| Action | Shortcut | Business Value / Description |
+|--------|----------|------------------------------|
+| **Add vMix** | `Ctrl+N` | Connect a new vMix node to your current workspace |
+| **Last Session** | — | Quickly restore the exact machines you were monitoring when you last closed VRC |
+| **Save Preset** | `Ctrl+S` | Save your current grid of vMix machines to load them instantly next time |
+| **Card Size** | — | Adjust how much screen space each device card takes |
 
 The status bar displays the current preset name and the number of connected devices.
 
 #### Additional Commands (overflow menu "⋯")
 
-| Action | Shortcut | Description |
-|--------|----------|-------------|
-| **Save As…** | `Ctrl+Shift+S` | Save configuration under a new name |
-| **Delete Preset** | — | Delete the selected preset |
-| **Export Preset** | — | Export preset to a file for transfer or backup |
-| **Import Preset** | — | Import preset from a file |
-| **Export Configuration** | — | Export full application configuration |
-| **Import Configuration** | — | Import full application configuration |
+| Action | Shortcut | Business Value / Description |
+|--------|----------|------------------------------|
+| **Save As…** | `Ctrl+Shift+S` | Duplicate your current workspace under a new name (e.g., "Tournament Day 2") |
+| **Delete Preset** | — | Remove a workspace setup you no longer need |
+| **Export Preset** | — | Save a specific workspace layout to a file to share with another operator |
+| **Import Preset** | — | Load a workspace layout provided by someone else |
+| **Export Configuration** | — | Create a master backup of your entire VRC setup to easily migrate to another PC |
+| **Import Configuration** | — | Restore your master backup on a new control laptop |
+
 
 ### Card Display
 
