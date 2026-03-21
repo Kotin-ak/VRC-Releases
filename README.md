@@ -9,6 +9,18 @@
 *(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
 
 ---
+## Why VRC? (The Problem It Solves)
+
+In professional live production, you rarely rely on a single machine. You might have one vMix PC for the main mix, another for instant replays, and a third for graphics or encoding. Monitoring and controlling all of them simultaneously usually requires a large crew or constantly switching between KVMs, which leads to missed cues, high stress, and potential on-air failures.
+
+VRC was built to solve this exact problem. It turns any Windows tablet or laptop on your network into a **Master Control Room**.
+
+### Who is this for?
+* **Solo Operators & Small Crews:** Manage recording, streaming, and switching across multiple PCs without needing extra hands. Ideal for local sports, corporate events, and live gigs.
+* **Esports Productions:** Control complex multi-node setups (player POVs, caster desks, main feed) from one central hub with precision timing.
+* **Broadcast Engineers & Technical Directors:** Monitor CPU/GPU loads, network drops, and audio levels across the entire network in real-time to prevent stream crashes before they happen.
+
+---
 
 ## 1. Dashboard
 
