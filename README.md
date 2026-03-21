@@ -3,7 +3,7 @@
 **VRC is a centralized Windows application designed to remotely MONITOR and CONTROL multiple vMix instances from a single dashboard.** Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
 
 * 🔴 **Full Remote Control:** Start, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click or via custom keyboard shortcuts (perfect for Elgato Stream Deck).
-* 📊 **Deep Monitoring:** Track CPU/GPU usage and audio levels in real-time via WMI and API.
+* 📊 Deep Monitoring: Track CPU/GPU performance and monitor available storage space in real-time via WMI to prevent recording failures.
 * ⏰ **Smart Automation:** Built-in Task Scheduler to automate your vMix commands based on precise timing.
 
 *(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
