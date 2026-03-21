@@ -1,6 +1,18 @@
-# VRC — Feature Reference
+# VRC (Video Recording Control Hub)
 
-> User guide for VRC (Video Recording Control Hub) application features.
+**VRC is a centralized Windows application designed to remotely MONITOR and CONTROL multiple vMix instances from a single dashboard.** Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
+
+* 🔴 **Full Remote Control:** Start, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click.
+* 📊 **Deep Monitoring:** Track CPU/GPU usage, dropped frames, and audio levels in real-time via WMI and API.
+* ⏰ **Smart Automation:** Built-in Task Scheduler to automate your vMix commands based on precise timing.
+
+*(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
+
+---
+
+## 1. Dashboard
+
+The main screen of the application — a grid of connected device cards with real-time monitoring.
 
 ---
 
