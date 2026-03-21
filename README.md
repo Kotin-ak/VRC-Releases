@@ -18,7 +18,8 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 ### Who is this for?
 * **Solo Operators & Small Crews:** Manage recording, streaming, and switching across multiple PCs without needing extra hands. Ideal for local sports, corporate events, and live gigs.
 * **Esports Productions:** Control complex multi-node setups (player POVs, caster desks, main feed) from one central hub with precision timing.
-* **Broadcast Engineers & Technical Directors:** Monitor CPU/GPU loads, network drops, and audio levels across the entire network in real-time to prevent stream crashes before they happen.
+* **Broadcast Engineers & Technical Directors:** Monitor CPU and GPU loads, audio levels, and crucially, **track remaining free disk space** across all nodes in real-time. Prevent stream crashes and ruined recordings before they happen.
+
 
 ---
 
