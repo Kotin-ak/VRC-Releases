@@ -16,9 +16,6 @@ The main screen of the application — a grid of connected device cards with rea
 
 ---
 
-## 1. Dashboard
-
-The main screen of the application — a grid of connected device cards with real-time monitoring.
 
 ![Dashboard](Images/Dashboard.png)
 
