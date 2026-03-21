@@ -120,7 +120,10 @@ Available through the card context menu:
 
 ## 3. Device Card
 
-Each connected vMix device is displayed as a card with full real-time information. Below is a detailed description of all vMix control features available directly from the card.
+Each connected vMix device is displayed as a card with full real-time information. 
+
+> [!NOTE]
+> **Safety First:** By default, all control actions on the card are **LOCKED** to prevent accidental clicks during a live broadcast. To enable control, you must first click the **Lock (🔒)** icon in the card footer.
 
 ### 3.1. Header
 
@@ -347,7 +350,7 @@ Compact list of scheduled tasks for the given device.
 
 | Element | Description |
 |---------|-------------|
-| **🔒 Lock** | Protection against accidental actions on the card. When active, control buttons are locked |
+| **🔒 Lock** | Lock	Default state: ON. Protects against accidental actions. When active, all control buttons are locked. Click to toggle. |
 | **🔽 Collapse Audio** | Show/hide the audio section (with icon rotation animation) |
 | **🔔 Notifications** | Enable/disable notifications for a specific device (green — on, gray — off) |
 | **⚠ Errors** | Display of current connection errors (in red) |
