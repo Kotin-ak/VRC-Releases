@@ -1,4 +1,9 @@
 # VRC (Video Recording Control Hub)
+### Quick Links
+
+* 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
+* 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
+
 
 **VRC is a centralized Windows application designed to remotely MONITOR and CONTROL multiple vMix instances from a single dashboard.** Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
 
