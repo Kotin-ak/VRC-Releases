@@ -1,4 +1,5 @@
 [En](README.md) | [Ru](README-ru.md)
+<video src="https://github.com/Kotin-ak/VRC-Releases/raw/main/Videos/VRCDemo.mp4" width="350" autoplay muted loop controls></video>
 
 # VRC (Video Recording Control Hub)
 ### Quick Links
