@@ -23,7 +23,7 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 ---
 
 ## 🛠 Installation (Important!)
-https://github.com/Kotin-ak/VRC-Releases/releases
+
 > [!IMPORTANT]
 > Because VRC is a locally signed .msix package, you **MUST** install the security certificate first, otherwise Windows will block the installation.
 
@@ -32,7 +32,7 @@ https://github.com/Kotin-ak/VRC-Releases/releases
 3. **Install Dependencies:** The extracted folder contains a `Dependencies` directory with additional required resources. Since this is a 64-bit Windows package, navigate to `Dependencies\x64` and install the Windows App Runtime by double-clicking: `Microsoft.WindowsAppRuntime.2.0-preview1.msix`
 4. **Install VRC:** Finally, double-click the main VRC `.msix` file to install the app.
 
-*(A detailed step-by-step image guide is included in the zip).*
+*(https://github.com/Kotin-ak/VRC-Releases/releases).*
 
 ---
 
