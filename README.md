@@ -32,7 +32,11 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 3. **Install Dependencies:** The extracted folder contains a `Dependencies` directory with additional required resources. Since this is a 64-bit Windows package, navigate to `Dependencies\x64` and install the Windows App Runtime by double-clicking: `Microsoft.WindowsAppRuntime.2.0-preview1.msix`
 4. **Install VRC:** Finally, double-click the main VRC `.msix` file to install the app.
 
-*(https://github.com/Kotin-ak/VRC-Releases/releases).*
+### Quick Links
+
+* 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
+* 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
+
 
 ---
 
