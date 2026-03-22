@@ -23,7 +23,7 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 ---
 
 ## 🛠 Installation (Important!)
-
+https://github.com/Kotin-ak/VRC-Releases/releases
 > [!IMPORTANT]
 > Because VRC is a locally signed .msix package, you **MUST** install the security certificate first, otherwise Windows will block the installation.
 
