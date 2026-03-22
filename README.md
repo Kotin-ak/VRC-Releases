@@ -1,7 +1,7 @@
 [En](README.md) | [Ru](README-ru.md)
 
 
-https://github.com/Kotin-ak/VRC-Releases/assets/100000000/some-random-id.mp4
+https://github.com/Kotin-ak/VRC-Releases/raw/main/Videos/VRCDemo.mp4
 
 # VRC (Video Recording Control Hub)
 ### Quick Links
