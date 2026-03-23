@@ -377,7 +377,7 @@ Compact list of scheduled tasks for the given device.
 
 ## 4. PC Health Monitoring (WMI)
 
-![PC monitoring](Images/PCMonitoringSection.png)
+![PC monitoring](Images/Disk1.png)
 
 Remote collection of workstation metrics for the machine running vMix:
 * CPU — processor load (with critical value highlighting).
