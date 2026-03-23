@@ -52,7 +52,7 @@ VRC был создан для решения именно этой пробле
 
 ---
 
-![Dashboard](Images/Dashboard.png)
+![Dashboard](Images/Dashboard1.png)
 
 ### Панель команд (Управление рабочей областью)
 
