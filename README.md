@@ -375,17 +375,26 @@ Compact list of scheduled tasks for the given device.
 
 ---
 
-## 4. PC Health Monitoring
+## 4. PC Health Monitoring (WMI)
 
 ![PC monitoring](Images/PCMonitoringSection.png)
 
 Remote collection of workstation metrics for the machine running vMix:
+* CPU — processor load (with critical value highlighting).
+* GPU 3D & Encode — graphics card and hardware video encoder load.
+* Disks — free space monitoring.
 
-- **CPU** — processor load (with critical value highlighting).
-- **GPU 3D** — graphics card load (3D rendering).
-- **GPU Encode** — hardware video encoder load.
+Data is collected natively via Windows Management Instrumentation (WMI).
 
-Data is collected via **WMI** (Windows Management Instrumentation). WMI settings are accessible from the card menu. When remote monitoring is unavailable, WMI/RPC error information is displayed.
+#### 🛠 Seamless WMI Configuration
+Configuring WMI across a network usually involves tedious firewall and UAC tweaking. To make this painless, the VRC settings menu provides built-in PowerShell scripts to automate the setup:
+
+1. Remote PC (Target vMix Machine): Click Copy -> Remote PC in VRC and run the script in PowerShell (as Administrator) on the target machine. This automatically configures WMI permissions, Windows Firewall, and UAC (LocalAccountTokenFilterPolicy) for remote access.
+2. This PC (VRC Host): Click Copy -> This PC and run it locally to add the remote machine to your TrustedHosts list.
+3. Credentials: Enter the Windows login and password of the remote PC.
+   * *Workgroup:* Just use the username.
+   * *Domain:* Use DOMAIN\username or .\username for local admin.
+4. Network Ports: If you are monitoring across different subnets, ensure your corporate routers allow traffic over TCP port 135 and the dynamic RPC range (49152–65535).
 
 ![WMI monitoring settings](Images/PCMonitoringsSettings.png)
 
