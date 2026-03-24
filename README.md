@@ -85,7 +85,7 @@ The main screen of the application — a grid of connected device cards with rea
 ---
 
 
-![Dashboard](Images/Dashboard.png)
+![Dashboard](Images/Dashboard1.png)
 
 ### Command Bar (Workspace Management)
 
