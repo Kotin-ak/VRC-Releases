@@ -1,3 +1,5 @@
+💬 Join our Discord community for support and updates: https://discord.gg/B6wndExc
+
 [En](README.md) | [Ru](README-ru.md)
 
 # VRC (Video Recording Control Hub)
