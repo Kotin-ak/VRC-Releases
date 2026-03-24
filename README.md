@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 
 ---
 
-**VRC is a centralized Windows application designed to remotely MONITOR and CONTROL multiple vMix instances from a single dashboard.** Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
+**VRC is a centralized
 
 * 🔴 **Full Remote Control:** Start, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click or via custom keyboard shortcuts (perfect for Elgato Stream Deck).
 * 📊 Deep Monitoring: Track CPU/GPU performance and monitor available storage space in real-time via WMI to prevent recording failures.
@@ -49,6 +49,12 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 - [6. Task Scheduler](#6-task-scheduler) *(Advanced)*
 - [7. Shortcuts](#7-shortcuts-external-controller-integration) *(Advanced · Optional)*
 - [8. Application Settings](#8-application-settings) *(Basic)*
+  - [8.1. General](#general)
+  - [8.2. Notifications](#notifications)
+  - [8.3. Web Dashboard (settings)](#web-dashboard-settings)
+  - [8.4. Control API](#control-api)
+  - [8.5. Logs and Diagnostics](#logs-and-diagnostics)
+  - [8.6. About](#about)
 - [9. Web Dashboard](#9-web-dashboard) *(Optional)*
 - [10. Navigation](#10-navigation) *(Basic)*
 - [❓ FAQ & Troubleshooting](#faq)
@@ -654,6 +660,73 @@ A modal dialog for detecting external controller buttons:
 | **Local URL** | Link to the dashboard for this PC |
 | **LAN Addresses** | List of addresses for LAN access |
 
+### Control API
+
+| Parameter | Description |
+|-----------|-------------|
+| **Enable** | Activate the built-in HTTP Control API server |
+| **Port** | Port for the API server (1–65535); default `5101` |
+| **API Key** | Authentication key for HTTP requests — use **Generate** to create a random key, **Copy** to copy it to clipboard |
+| **Status** | Whether the API key is currently configured |
+| **Documentation** | Link to the full API reference |
+| **Stream Deck Plugin** | Install the VRC Control action plugin for Elgato Stream Deck |
+
+> When an API Key is configured, all HTTP requests must include the `X-Api-Key: {key}` header.
+
+#### HTTP Endpoints
+
+| Method | Endpoint | Body | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/status` | — | VRC server status, version, device count, and device list |
+| `GET` | `/api/devices` | — | List of all registered devices |
+| `GET` | `/api/devices/{id}` | — | Device info by ID |
+| `POST` | `/api/devices/{id}/command` | `ApiCommandRequest` | Execute a named command on the specified device |
+| `GET` | `/api/devices/{id}/commands` | — | Available commands for the device (grouped by category) |
+| `GET` | `/api/devices/{id}/commands/{category}/{function}/parameters` | — | Parameters for a specific function |
+| `POST` | `/api/shortcuts/execute` | `ApiShortcutExecuteRequest` | Execute a shortcut by external button ID |
+
+> **Audit logging:** `POST /api/shortcuts/execute` writes `CMD [External]` to the device audit log. `POST /api/devices/{id}/command` writes `CMD [API]` to the device audit log.
+
+**`GET /api/status` — response:**
+```json
+{
+  "isRunning": true,
+  "deviceCount": 2,
+  "version": "1.5.0",
+  "devices": [
+    { "id": "...", "name": "Studio A", "type": "vMix", "ipAddress": "192.168.1.10", "isConnected": true }
+  ]
+}
+```
+
+**`POST /api/devices/{id}/command` — request body:**
+```json
+{ "deviceId": "...", "commandName": "StartRecording", "parameters": null }
+```
+
+**`POST /api/shortcuts/execute` — request body:**
+```json
+{ "buttonId": "uuid-of-stream-deck-action" }
+```
+
+#### SignalR Hub (`/hubs/control`)
+
+| Direction | Method | Payload | Description |
+|-----------|--------|---------|-------------|
+| Server → Client | `ButtonFeedback` | `ApiButtonFeedback` | Button state update sent back to the external controller |
+| Server → Client | `ActivatorEvent` | `ApiActivatorEvent` | Real-time ACTS event broadcast (tally, audio levels, recording status) |
+| Client → Server | `IdentifyButton` | `buttonId` | Button identification request during shortcut setup |
+
+**`ButtonFeedback` payload:**
+```json
+{ "buttonKey": "91AC8", "isOn": true, "eventType": "Recording", "color": "#E53935" }
+```
+
+**`ActivatorEvent` payload:**
+```json
+{ "deviceId": "...", "eventType": "Input", "inputNumber": 3, "value": 1.0, "isOn": true }
+```
+
 ### Logs and Diagnostics
 
 ![Settings — logs and diagnostics](Images/SettingsLogs.png)
@@ -662,6 +735,58 @@ A modal dialog for detecting external controller buttons:
 |-----------|-------------|
 | **Device Logs** | Open the device log folder |
 | **GC Monitor** | Garbage collector monitoring status and logs |
+
+#### Log File Structure
+
+All log files are stored in the app's local data folder and are accessible via the **Device Logs** button.
+
+| File | Retention | Contents |
+|------|-----------|----------|
+| `{DeviceName}_{id}/audit-YYYYMMDD.log` | 30 days | Per-device audit: connections, state changes, ACTS events, operator commands |
+| `Updates/update-YYYYMMDD.log` | 90 days | Update history: check, download, install, errors with HRESULT codes |
+| `_system/gc-health-YYYYMMDD.log` | 30 days | .NET memory metrics: heap, working set, GC generation counters, fragmentation |
+| `_system/hw-monitor-YYYYMMDD.log` | 30 days | Hardware threshold events: CPU/GPU/disk alerts and recoveries |
+
+#### Per-device audit log (`audit-*.log`)
+
+| Event | Example entry |
+|-------|---------------|
+| **Connection** | `Connected (192.168.1.10:8099, Tcp)` |
+| **Reconnect / error** | `Reconnect (Reconnecting/Network): Host unreachable` |
+| **Disconnection** | `Disconnected (UserRequested)` |
+| **Initial snapshot** | `Snapshot Rec=False Stream=False Ext=False MC=False FS=False` |
+| **Lock / Unlock** | `🔓 Unlocked (Lock)` / `🔒 Locked (Lock)` |
+| **State change** | `Δ Recording: false → true Rec=—` |
+| **State change** | `Δ Streaming: true → false Rec=00:15:42` |
+| **ACTS event** | `ACTS Recording Value=1 Rec=00:15:42` |
+| **ACTS event** | `ACTS Overlay2 Input=13 Value=1 Rec=—` |
+| **UI button (intent)** | `CMD [Operator] Send: StartStopRecording Rec=—` |
+| **UI button (success)** | `CMD [Operator] Send: StartStopRecording -> OK` |
+| **UI button (error)** | `CMD [Operator] Send: StartStopStreaming -> ERROR: timeout` |
+| **Scheduler (success)** | `CMD [Timer] Send: StartRecording -> OK 'Morning Rec' (attempt 1/3)` |
+| **Scheduler (error)** | `CMD [Timer] Send: StartRecording -> ERROR: not connected 'Morning Rec' (attempt 2/3)` |
+| **Shortcut (success)** | `CMD [External] Send: StartRecording -> OK 'REC Button'` |
+| **Shortcut (error)** | `CMD [External] Send: StartRecording -> ERROR: timeout 'REC Button'` |
+
+#### Hardware threshold log (`_system/hw-monitor-*.log`)
+
+Writes only on threshold crossings — not on every poll cycle.
+
+| Threshold | Trigger condition |
+|-----------|-------------------|
+| **CPU** | Usage > 90% (crossed / recovered) |
+| **GPU** | Encode usage > 95% (crossed / recovered) |
+| **Disk** | Free < 10 GB or free < 10% (crossed / recovered) |
+
+Example entries:
+
+```
+WRN [192.168.1.10] CPU load crossed threshold: 92.3% (threshold 90%)
+INF [192.168.1.10] CPU load recovered: 74.5%
+WRN [192.168.1.10] GPU Encode load crossed threshold: 96.0% (threshold 95%)
+WRN [192.168.1.10] Disk C: free space dropped below threshold — 8.5 GB (6.2% free)
+INF [192.168.1.10] Disk C: free space recovered — 15.2 GB (11.4% free)
+```
 
 ### About
 

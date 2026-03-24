@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 
 ---
 
-**VRC — это централизованное Windows-приложение, разработанное для удаленного МОНИТОРИНГА и УПРАВЛЕНИЯ несколькими экземплярами vMix с единого дашборда.** Хватит прыгать между разными компьютерами для управления трансляцией. С VRC у вас есть полное удаленное управление вашими нодами vMix:
+**VRC — это централизованное
 
 * 🔴 **Полное удаленное управление:** Запускайте, останавливайте и управляйте записью (Recording), трансляцией (Streaming), внешними выходами (External) и мультикамерой (Multicorder) одним кликом или с помощью настраиваемых сочетаний клавиш (идеально для Elgato Stream Deck).
 * 📊 **Глубокий мониторинг:** Отслеживайте производительность CPU/GPU и мониторьте доступное место на диске в реальном времени через WMI для предотвращения сбоев записи.
@@ -49,6 +49,12 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 - [6. Планировщик задач](#6-планировщик-задач-task-scheduler) *(Продвинутый)*
 - [7. Сочетания клавиш](#7-сочетания-клавиш-интеграция-с-внешними-контроллерами) *(Продвинутый · Опционально)*
 - [8. Настройки приложения](#8-настройки-приложения) *(Базовый)*
+  - [8.1. Общие](#общие-general)
+  - [8.2. Уведомления](#уведомления-notifications)
+  - [8.3. Веб-дашборд (настройка)](#веб-дашборд-web-dashboard)
+  - [8.4. Control API](#control-api)
+  - [8.5. Журналы и диагностика](#журналы-и-диагностика-logs-and-diagnostics)
+  - [8.6. О программе](#о-программе-about)
 - [9. Веб-дашборд](#9-веб-дашборд) *(Опционально)*
 - [10. Навигация](#10-навигация) *(Базовый)*
 - [❓ Частые вопросы и устранение неполадок](#faq)
@@ -653,6 +659,73 @@ VRC был создан для решения именно этой пробле
 | **Local URL** | Ссылка на дашборд для этого ПК |
 | **LAN Addresses** | Список адресов для доступа по локальной сети |
 
+### Control API
+
+| Параметр | Описание |
+|-----------|-------------|
+| **Enable** | Активировать встроенный HTTP-сервер Control API |
+| **Port** | Порт сервера API (1–65535); по умолчанию `5101` |
+| **API Key** | Ключ аутентификации для HTTP-запросов — **Generate** создаёт случайный ключ, **Copy** копирует его в буфер обмена |
+| **Status** | Отображает, настроен ли ключ API |
+| **Documentation** | Ссылка на полный справочник API |
+| **Stream Deck Plugin** | Установить плагин VRC Control для Elgato Stream Deck |
+
+> Если ключ API задан, все HTTP-запросы должны содержать заголовок `X-Api-Key: {key}`.
+
+#### HTTP-эндпоинты
+
+| Метод | Эндпоинт | Тело | Описание |
+|-------|----------|------|----------|
+| `GET` | `/api/status` | — | Статус сервера VRC, версия, количество устройств и их список |
+| `GET` | `/api/devices` | — | Список всех устройств |
+| `GET` | `/api/devices/{id}` | — | Информация об устройстве по ID |
+| `POST` | `/api/devices/{id}/command` | `ApiCommandRequest` | Выполнить именованную команду на устройстве |
+| `GET` | `/api/devices/{id}/commands` | — | Список доступных команд устройства (sgroups by category) |
+| `GET` | `/api/devices/{id}/commands/{category}/{function}/parameters` | — | Параметры конкретной функции |
+| `POST` | `/api/shortcuts/execute` | `ApiShortcutExecuteRequest` | Выполнить шорткат по ID кнопки внешнего устройства |
+
+> **Аудит-логирование:** `POST /api/shortcuts/execute` записывает `CMD [External]` в аудит-журнал устройства. `POST /api/devices/{id}/command` записывает `CMD [API]` в аудит-журнал устройства.
+
+**`GET /api/status` — ответ:**
+```json
+{
+  "isRunning": true,
+  "deviceCount": 2,
+  "version": "1.5.0",
+  "devices": [
+    { "id": "...", "name": "Studio A", "type": "vMix", "ipAddress": "192.168.1.10", "isConnected": true }
+  ]
+}
+```
+
+**`POST /api/devices/{id}/command` — тело запроса:**
+```json
+{ "deviceId": "...", "commandName": "StartRecording", "parameters": null }
+```
+
+**`POST /api/shortcuts/execute` — тело запроса:**
+```json
+{ "buttonId": "uuid-действия-stream-deck" }
+```
+
+#### SignalR-хаб (`/hubs/control`)
+
+| Направление | Метод | Данные | Описание |
+|-------------|-------|--------|----------|
+| Server → Client | `ButtonFeedback` | `ApiButtonFeedback` | Обновление состояния кнопки внешнего контроллера |
+| Server → Client | `ActivatorEvent` | `ApiActivatorEvent` | Трансляция ACTS-событий в реальном времени (tally, уровни звука, статус записи) |
+| Client → Server | `IdentifyButton` | `buttonId` | Запрос идентификации кнопки при настройке шортката |
+
+**Данные `ButtonFeedback`:**
+```json
+{ "buttonKey": "91AC8", "isOn": true, "eventType": "Recording", "color": "#E53935" }
+```
+
+**Данные `ActivatorEvent`:**
+```json
+{ "deviceId": "...", "eventType": "Input", "inputNumber": 3, "value": 1.0, "isOn": true }
+```
+
 ### Журналы и диагностика (Logs and Diagnostics)
 
 ![Settings — logs and diagnostics](Images/SettingsLogs.png)
@@ -661,6 +734,58 @@ VRC был создан для решения именно этой пробле
 |-----------|-------------|
 | **Device Logs** | Открыть папку с журналами устройств |
 | **GC Monitor** | Статус мониторинга сборщика мусора и логи |
+
+#### Структура файлов журналов
+
+Все файлы журналов хранятся в папке локальных данных приложения и доступны через кнопку **Device Logs**.
+
+| Файл | Хранение | Содержимое |
+|------|----------|------------|
+| `{DeviceName}_{id}/audit-YYYYMMDD.log` | 30 дней | Аудит устройства: подключения, изменения состояния, ACTS-события, команды оператора |
+| `Updates/update-YYYYMMDD.log` | 90 дней | История обновлений: проверка, скачивание, установка, ошибки с кодами HRESULT |
+| `_system/gc-health-YYYYMMDD.log` | 30 дней | Метрики памяти .NET: куча, рабочий набор, счётчики GC, фрагментация |
+| `_system/hw-monitor-YYYYMMDD.log` | 30 дней | Пороговые события оборудования: предупреждения и восстановления CPU/GPU/диска |
+
+#### Аудит-журнал устройства (`audit-*.log`)
+
+| Событие | Пример записи |
+|---------|---------------|
+| **Подключение** | `Connected (192.168.1.10:8099, Tcp)` |
+| **Реконнект / ошибка** | `Reconnect (Reconnecting/Network): Host unreachable` |
+| **Отключение** | `Disconnected (UserRequested)` |
+| **Начальный снимок** | `Snapshot Rec=False Stream=False Ext=False MC=False FS=False` |
+| **Блокировка / разблокировка** | `🔓 Unlocked (Lock)` / `🔒 Locked (Lock)` |
+| **Изменение состояния** | `Δ Recording: false → true Rec=—` |
+| **Изменение состояния** | `Δ Streaming: true → false Rec=00:15:42` |
+| **ACTS-событие** | `ACTS Recording Value=1 Rec=00:15:42` |
+| **ACTS-событие** | `ACTS Overlay2 Input=13 Value=1 Rec=—` |
+| **Кнопка UI (намерение)** | `CMD [Operator] Send: StartStopRecording Rec=—` |
+| **Кнопка UI (успех)** | `CMD [Operator] Send: StartStopRecording -> OK` |
+| **Кнопка UI (ошибка)** | `CMD [Operator] Send: StartStopStreaming -> ERROR: timeout` |
+| **Планировщик (успех)** | `CMD [Timer] Send: StartRecording -> OK 'Утренняя запись' (attempt 1/3)` |
+| **Планировщик (ошибка)** | `CMD [Timer] Send: StartRecording -> ERROR: not connected 'Утренняя запись' (attempt 2/3)` |
+| **Шорткат (успех)** | `CMD [External] Send: StartRecording -> OK 'REC Button'` |
+| **Шорткат (ошибка)** | `CMD [External] Send: StartRecording -> ERROR: timeout 'REC Button'` |
+
+#### Журнал порогов оборудования (`_system/hw-monitor-*.log`)
+
+Записи появляются только при пересечении порогов — не на каждом цикле опроса.
+
+| Порог | Условие срабатывания |
+|-------|---------------------|
+| **CPU** | Загрузка > 90% (пересечение / восстановление) |
+| **GPU** | Загрузка Encode > 95% (пересечение / восстановление) |
+| **Диск** | Свободно < 10 ГБ или < 10% (пересечение / восстановление) |
+
+Примеры записей:
+
+```
+WRN [192.168.1.10] CPU load crossed threshold: 92.3% (threshold 90%)
+INF [192.168.1.10] CPU load recovered: 74.5%
+WRN [192.168.1.10] GPU Encode load crossed threshold: 96.0% (threshold 95%)
+WRN [192.168.1.10] Disk C: free space dropped below threshold — 8.5 GB (6.2% free)
+INF [192.168.1.10] Disk C: free space recovered — 15.2 GB (11.4% free)
+```
 
 ### О программе (About)
 
