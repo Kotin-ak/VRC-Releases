@@ -1,10 +1,5 @@
 [En](README.md) | [Ru](README-ru.md)
 
-
-
-<video src="https://github.com/user-attachments/assets/023b993f-e2d7-4ea5-b8f1-8bcd064e1366" width="350" autoplay muted loop controls></video>
-
-
 # VRC (Video Recording Control Hub)
 ### Quick Links
 
@@ -21,6 +16,36 @@
 *(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
 
 ---
+
+## 📋 Table of Contents
+
+> [!IMPORTANT]
+> **New to VRC? Start with the [📥 Installation Guide](#installation) before anything else.**
+
+- [Why VRC?](#why-vrc-the-problem-it-solves)
+- [**📥 Installation** *(start here!)*](#installation)
+- [1. Dashboard](#1-dashboard)
+- [2. vMix Device Management](#2-vmix-device-management)
+- [3. Device Card](#3-device-card)
+  - [3.1. Header](#31-header)
+  - [3.2. Status Indicators](#32-status-indicators)
+  - [3.3. Program Monitor](#33-program-monitor)
+  - [3.4. Inputs Tab](#34-inputs-tab--input-control)
+  - [3.5. Audio Tab](#35-audio-tab--audio-mixer)
+  - [3.6. List Tab](#36-list-tab--video-list-management)
+  - [3.7. Outputs Tab](#37-outputs-tab--output-control)
+  - [3.8. Replay Tab](#38-replay-tab--instant-replay)
+  - [3.9. Scheduler Tab](#39-scheduler-tab--device-schedule)
+  - [3.10. Card Footer](#310-card-footer)
+- [4. PC Health Monitoring](#4-pc-health-monitoring)
+- [5. Streaming Settings](#5-streaming-settings)
+- [6. Task Scheduler](#6-task-scheduler)
+- [7. Shortcuts](#7-shortcuts-external-controller-integration)
+- [8. Application Settings](#8-application-settings)
+- [9. Web Dashboard](#9-web-dashboard)
+- [10. Navigation](#10-navigation)
+
+---
 ## Why VRC? (The Problem It Solves)
 
 In professional live production, you rarely rely on a single machine. You might have one vMix PC for the main mix, another for instant replays, and a third for graphics or encoding. Monitoring and controlling all of them simultaneously usually requires a large crew or constantly switching between KVMs, which leads to missed cues, high stress, and potential on-air failures.
@@ -34,6 +59,7 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 
 ---
 
+<a id="installation"></a>
 ## 🛠 Installation (Important!)
 
 > [!IMPORTANT]
@@ -59,7 +85,7 @@ The main screen of the application — a grid of connected device cards with rea
 ---
 
 
-![Dashboard](Images/Dashboard1.png)
+![Dashboard](Images/Dashboard.png)
 
 ### Command Bar (Workspace Management)
 
@@ -375,9 +401,11 @@ Compact list of scheduled tasks for the given device.
 
 ---
 
-## 4. PC Health Monitoring (WMI)
+## 4. PC Health Monitoring
 
-![PC monitoring](Images/Disk1.png)
+![PC monitoring](Images/PCMonitoringSection.png)
+
+### PC Health Monitoring (WMI)
 
 Remote collection of workstation metrics for the machine running vMix:
 * CPU — processor load (with critical value highlighting).
