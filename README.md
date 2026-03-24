@@ -1,6 +1,10 @@
 [En](README.md) | [Ru](README-ru.md)
 
 
+
+https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
+
+
 # VRC (Video Recording Control Hub)
 ### Quick Links
 
