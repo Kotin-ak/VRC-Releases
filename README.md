@@ -1,5 +1,6 @@
 [En](README.md) | [Ru](README-ru.md)
 
+
 # VRC (Video Recording Control Hub)
 ### Quick Links
 
@@ -23,10 +24,12 @@
 > **New to VRC? Start with the [📥 Installation Guide](#installation) before anything else.**
 
 - [Why VRC?](#why-vrc-the-problem-it-solves)
+- [⚙️ System Requirements](#requirements)
 - [**📥 Installation** *(start here!)*](#installation)
-- [1. Dashboard](#1-dashboard)
-- [2. vMix Device Management](#2-vmix-device-management)
-- [3. Device Card](#3-device-card)
+- [**🚀 Quick Start** *(5 minutes)*](#quickstart)
+- [1. Dashboard](#1-dashboard) *(Basic)*
+- [2. vMix Device Management](#2-vmix-device-management) *(Basic)*
+- [3. Device Card](#3-device-card) *(Basic)*
   - [3.1. Header](#31-header)
   - [3.2. Status Indicators](#32-status-indicators)
   - [3.3. Program Monitor](#33-program-monitor)
@@ -37,13 +40,14 @@
   - [3.8. Replay Tab](#38-replay-tab--instant-replay)
   - [3.9. Scheduler Tab](#39-scheduler-tab--device-schedule)
   - [3.10. Card Footer](#310-card-footer)
-- [4. PC Health Monitoring](#4-pc-health-monitoring)
-- [5. Streaming Settings](#5-streaming-settings)
-- [6. Task Scheduler](#6-task-scheduler)
-- [7. Shortcuts](#7-shortcuts-external-controller-integration)
-- [8. Application Settings](#8-application-settings)
-- [9. Web Dashboard](#9-web-dashboard)
-- [10. Navigation](#10-navigation)
+- [4. PC Health Monitoring](#4-pc-health-monitoring) *(Optional · Advanced)*
+- [5. Streaming Settings](#5-streaming-settings) *(Basic)*
+- [6. Task Scheduler](#6-task-scheduler) *(Advanced)*
+- [7. Shortcuts](#7-shortcuts-external-controller-integration) *(Advanced · Optional)*
+- [8. Application Settings](#8-application-settings) *(Basic)*
+- [9. Web Dashboard](#9-web-dashboard) *(Optional)*
+- [10. Navigation](#10-navigation) *(Basic)*
+- [❓ FAQ & Troubleshooting](#faq)
 
 ---
 ## Why VRC? (The Problem It Solves)
@@ -59,6 +63,20 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 
 ---
 
+<a id="requirements"></a>
+## ⚙️ System Requirements
+
+| Component | Requirement |
+|-----------|-------------|
+| **OS** | Windows 10 (build 19041+) or Windows 11 |
+| **Architecture** | x64 only |
+| **Runtime** | Windows App Runtime 2.0 *(bundled in the release package)* |
+| **vMix** | Any version · v29+ recommended for full feature support (GO button) |
+| **Network** | LAN access to vMix machines; default ports: HTTP `8088`, TCP `8099` |
+| **WMI Monitoring** | *(Optional)* Windows credentials on each remote machine — see [Section 4](#4-pc-health-monitoring) |
+
+---
+
 <a id="installation"></a>
 ## 🛠 Installation (Important!)
 
@@ -70,17 +88,30 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 3. **Install Dependencies:** The extracted folder contains a `Dependencies` directory with additional required resources. Since this is a 64-bit Windows package, navigate to `Dependencies\x64` and install the Windows App Runtime by double-clicking: `Microsoft.WindowsAppRuntime.2.0-preview1.msix`
 4. **Install VRC:** Finally, double-click the main VRC `.msix` file to install the app.
 
-### Quick Links
+---
 
-* 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
-* 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
+<a id="quickstart"></a>
+## 🚀 Quick Start (First 5 Minutes)
 
+> [!TIP]
+> **Already installed?** Follow these steps to get up and running immediately.
+
+1. **Launch VRC** — you'll see an empty Dashboard.
+2. Click **Add vMix** (`Ctrl+N`), enter your vMix machine's IP address and port, then click **Probe** to verify the connection.
+3. Click **Save** — the device card appears on the Dashboard.
+4. Wait for the connection indicator in the card header to turn **green** *(connected)*.
+5. Click the **🔒 Lock icon** in the card footer to unlock controls — all buttons are locked by default to prevent accidental actions on air.
+
+> ✅ **Done.** Click any status indicator — **REC**, **STREAM**, **EXT** — to control your vMix remotely.
 
 ---
 
 ## 1. Dashboard
 
 The main screen of the application — a grid of connected device cards with real-time monitoring.
+
+> [!TIP]
+> **Controls not responding?** Each card has a **🔒 Lock** in its footer — active by default. Click it to unlock the card and enable all control buttons. See [3.10. Card Footer](#310-card-footer).
 
 ---
 
@@ -178,6 +209,9 @@ Each connected vMix device is displayed as a card with full real-time informatio
 ### 3.2. Status Indicators
 
 ![Status indicators](Images/StatusSection.png)
+
+> [!NOTE]
+> Some indicators (**Multicorder**, **Replay**, extended **Overlay** layers, additional **Output** channels) are only visible if your vMix edition and version support them. The **GO** button requires vMix v29+; earlier versions show **QuickPlay** instead.
 
 Interactive indicators — clicking toggles the corresponding vMix function:
 
@@ -636,6 +670,14 @@ A modal dialog for detecting external controller buttons:
 | **Release Notes** | Link to the release page |
 | **Reset Settings** | Restore all settings to defaults |
 
+### ⌨️ Keyboard Shortcuts Reference
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+N` | Add a new vMix device |
+| `Ctrl+S` | Save current preset |
+| `Ctrl+Shift+S` | Save preset under a new name (Save As…) |
+
 ---
 
 ## 9. Web Dashboard
@@ -664,3 +706,36 @@ Built-in read-only dashboard accessible from any browser on the local network.
 - Dedicated **Scheduler** page for global management of all tasks.
 - Dedicated **Shortcuts** page for external controller button bindings.
 - Page caching — state is preserved when switching between sections.
+
+---
+
+<a id="faq"></a>
+## ❓ FAQ & Troubleshooting
+
+### VRC cannot connect to vMix
+- Verify that vMix is running and **Web Controller is enabled** (vMix Settings → Web Controller).
+- Double-check the IP address and port (default HTTP: `8088`, TCP: `8099`).
+- Ensure the Windows Firewall on the vMix machine allows inbound connections on that port.
+- Use the **Probe** button in the Add/Edit device dialog to test connectivity before saving.
+
+### Card buttons don’t respond to clicks
+- Controls are **locked by default** to prevent accidental on-air actions.
+- Click the **🔒 Lock icon** in the card footer to unlock the card.
+
+### WMI monitoring shows no data
+- Run the PowerShell setup scripts from VRC Settings → WMI (see [Section 4](#4-pc-health-monitoring)).
+- Use the correct credential format: Workgroup → `username`; Domain → `DOMAIN\username` or `.\username`.
+- Ensure TCP port `135` and the dynamic RPC range (`49152–65535`) are open on your network.
+
+### Certificate fails to install
+- Run the certificate installer as **Administrator** (right-click → Run as administrator).
+- Ensure you place it in **Local Machine → Trusted People** (not Current User).
+
+### Some indicators (Multicorder, Replay, GO) are missing
+- These features depend on your **vMix edition and version**.
+- Multicorder and Replay are only available in higher vMix editions.
+- The **GO** button requires **vMix v29+**; earlier versions show **QuickPlay** instead.
+
+### Notifications are not appearing
+- Check **Settings → Notifications** and ensure the mode is not set to *Off*.
+- Confirm Windows system notifications for VRC are allowed (Windows Settings → System → Notifications).
