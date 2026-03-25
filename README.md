@@ -3,7 +3,7 @@
 # VRC (Video Recording Control Hub)
 
 💡 **Your feedback is the fuel for this project!**
-Whether it's a bug report, a feature request for your specific workflow, or just a quick *"it works flawlessly on my setup"* — please leave it in **[GitHub Issues](https://github.com/Kotin-ak/VRC-Releases/issues)**. I track all development and prioritize updates based on your GitHub reports rather than Discord messages. Every single comment helps make this freeware better!
+Whether it's a bug report, a feature request for your specific workflow, or just a quick *"it works flawlessly on my setup"* — please leave it in **[GitHub Issues](https://github.com/Kotin-ak/VRC-Releases/issues)**. I track all development and prioritize updates based on your GitHub reports. Every single comment helps make this freeware better!
 
 ### Quick Links
 
