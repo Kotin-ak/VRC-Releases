@@ -1,3 +1,6 @@
+> [!TIP]
+> 💡 **Please leave all your feedback on the project's [Issues page](https://github.com/Kotin-ak/VRC-Releases/issues). It is critical for the app's growth and improvement. VRC is a free tool, and your input helps me make it better for everyone. If it works perfectly on your machine, please let me know! For bug reports and feature requests, use GitHub tickets.**
+
 # VRC (Video Recording Control Hub)
 ### Quick Links
 
