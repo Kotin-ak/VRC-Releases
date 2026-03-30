@@ -1,20 +1,61 @@
-<video src="https://github.com/user-attachments/assets/023b993f-e2d7-4ea5-b8f1-8bcd064e1366" width="350" autoplay muted loop controls></video>
-
-
 # VRC (Video Recording Control Hub)
 ### Quick Links
 
 * 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
 * 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
 
+### 🎬 Quick Demo
 
-**VRC is a centralized Windows application designed to remotely MONITOR and CONTROL multiple vMix instances from a single dashboard.** Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
+https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 
-* 🔴 **Full Remote Control:** Start, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click or via custom keyboard shortcuts (perfect for Elgato Stream Deck).
-* 📊 Deep Monitoring: Track CPU/GPU performance and monitor available storage space in real-time via WMI to prevent recording failures.
+---
+
+**VRC** is a centralized Windows application designed to remotely monitor and control multiple vMix instances from a single dashboard. Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
+
+* 🔴 **Full Remote Control:** Launch, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click or customizable keyboard shortcuts (ideal for Elgato Stream Deck).
+* 📊 **Deep Monitoring:** Track CPU/GPU performance and monitor available storage space in real-time via WMI to prevent recording failures.
 * ⏰ **Smart Automation:** Built-in Task Scheduler to automate your vMix commands based on precise timing.
 
 *(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
+
+---
+
+## 📋 Table of Contents
+
+> [!IMPORTANT]
+> **New to VRC? Start with the [📥 Installation Guide](#installation) before anything else.**
+
+- [Why VRC?](#why-vrc-the-problem-it-solves)
+- [⚙️ System Requirements](#requirements)
+- [**📥 Installation** *(start here!)*](#installation)
+- [**🚀 Quick Start** *(5 minutes)*](#quickstart)
+- [1. Dashboard](#1-dashboard) *(Basic)*
+- [2. vMix Device Management](#2-vmix-device-management) *(Basic)*
+- [3. Device Card](#3-device-card) *(Basic)*
+  - [3.1. Header](#31-header)
+  - [3.2. Status Indicators](#32-status-indicators)
+  - [3.3. Program Monitor](#33-program-monitor)
+  - [3.4. Inputs Tab](#34-inputs-tab--input-control)
+  - [3.5. Audio Tab](#35-audio-tab--audio-mixer)
+  - [3.6. List Tab](#36-list-tab--video-list-management)
+  - [3.7. Outputs Tab](#37-outputs-tab--output-control)
+  - [3.8. Replay Tab](#38-replay-tab--instant-replay)
+  - [3.9. Scheduler Tab](#39-scheduler-tab--device-schedule)
+  - [3.10. Card Footer](#310-card-footer)
+- [4. PC Health Monitoring](#4-pc-health-monitoring) *(Optional · Advanced)*
+- [5. Streaming Settings](#5-streaming-settings) *(Basic)*
+- [6. Task Scheduler](#6-task-scheduler) *(Advanced)*
+- [7. Shortcuts](#7-shortcuts-external-controller-integration) *(Advanced · Optional)*
+- [8. Application Settings](#8-application-settings) *(Basic)*
+  - [8.1. General](#general)
+  - [8.2. Notifications](#notifications)
+  - [8.3. Web Dashboard (settings)](#web-dashboard-settings)
+  - [8.4. Control API](#control-api)
+  - [8.5. Logs and Diagnostics](#logs-and-diagnostics)
+  - [8.6. About](#about)
+- [9. Web Dashboard](#9-web-dashboard) *(Optional)*
+- [10. Navigation](#10-navigation) *(Basic)*
+- [❓ FAQ & Troubleshooting](#faq)
 
 ---
 ## Why VRC? (The Problem It Solves)
@@ -30,6 +71,21 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 
 ---
 
+<a id="requirements"></a>
+## ⚙️ System Requirements
+
+| Component | Requirement |
+|-----------|-------------|
+| **OS** | Windows 10 (build 19041+) or Windows 11 |
+| **Architecture** | x64 only |
+| **Runtime** | Windows App Runtime 2.0 *(bundled in the release package)* |
+| **vMix** | Any version · v29+ recommended for full feature support (GO button) |
+| **Network** | LAN access to vMix machines; default ports: HTTP `8088`, TCP `8099` |
+| **WMI Monitoring** | *(Optional)* Windows credentials on each remote machine — see [Section 4](#4-pc-health-monitoring) |
+
+---
+
+<a id="installation"></a>
 ## 🛠 Installation (Important!)
 
 > [!IMPORTANT]
@@ -40,11 +96,21 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 3. **Install Dependencies:** The extracted folder contains a `Dependencies` directory with additional required resources. Since this is a 64-bit Windows package, navigate to `Dependencies\x64` and install the Windows App Runtime by double-clicking: `Microsoft.WindowsAppRuntime.2.0-preview1.msix`
 4. **Install VRC:** Finally, double-click the main VRC `.msix` file to install the app.
 
-### Quick Links
+---
 
-* 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
-* 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
+<a id="quickstart"></a>
+## 🚀 Quick Start (First 5 Minutes)
 
+> [!TIP]
+> **Already installed?** Follow these steps to get up and running immediately.
+
+1. **Launch VRC** — you'll see an empty Dashboard.
+2. Click **Add vMix** (`Ctrl+N`), enter your vMix machine's IP address and port, then click **Probe** to verify the connection.
+3. Click **Save** — the device card appears on the Dashboard.
+4. Wait for the connection indicator in the card header to turn **green** *(connected)*.
+5. Click the **🔒 Lock icon** in the card footer to unlock controls — all buttons are locked by default to prevent accidental actions on air.
+
+> ✅ **Done.** Click any status indicator — **REC**, **STREAM**, **EXT** — to control your vMix remotely.
 
 ---
 
@@ -52,10 +118,13 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 
 The main screen of the application — a grid of connected device cards with real-time monitoring.
 
+> [!TIP]
+> **Controls not responding?** Each card has a **🔒 Lock** in its footer — active by default. Click it to unlock the card and enable all control buttons. See [3.10. Card Footer](#310-card-footer).
+
 ---
 
 
-![Dashboard](Images/Dashboard.png)
+![Dashboard](Images/Dashboard1.png)
 
 ### Command Bar (Workspace Management)
 
@@ -148,6 +217,9 @@ Each connected vMix device is displayed as a card with full real-time informatio
 ### 3.2. Status Indicators
 
 ![Status indicators](Images/StatusSection.png)
+
+> [!NOTE]
+> Some indicators (**Multicorder**, **Replay**, extended **Overlay** layers, additional **Output** channels) are only visible if your vMix edition and version support them. The **GO** button requires vMix v29+; earlier versions show **QuickPlay** instead.
 
 Interactive indicators — clicking toggles the corresponding vMix function:
 
@@ -375,13 +447,24 @@ Compact list of scheduled tasks for the given device.
 
 ![PC monitoring](Images/PCMonitoringSection.png)
 
+### PC Health Monitoring (WMI)
+
 Remote collection of workstation metrics for the machine running vMix:
+* CPU — processor load (with critical value highlighting).
+* GPU 3D & Encode — graphics card and hardware video encoder load.
+* Disks — free space monitoring.
 
-- **CPU** — processor load (with critical value highlighting).
-- **GPU 3D** — graphics card load (3D rendering).
-- **GPU Encode** — hardware video encoder load.
+Data is collected natively via Windows Management Instrumentation (WMI).
 
-Data is collected via **WMI** (Windows Management Instrumentation). WMI settings are accessible from the card menu. When remote monitoring is unavailable, WMI/RPC error information is displayed.
+#### 🛠 Seamless WMI Configuration
+Configuring WMI across a network usually involves tedious firewall and UAC tweaking. To make this painless, the VRC settings menu provides built-in PowerShell scripts to automate the setup:
+
+1. Remote PC (Target vMix Machine): Click Copy -> Remote PC in VRC and run the script in PowerShell (as Administrator) on the target machine. This automatically configures WMI permissions, Windows Firewall, and UAC (LocalAccountTokenFilterPolicy) for remote access.
+2. This PC (VRC Host): Click Copy -> This PC and run it locally to add the remote machine to your TrustedHosts list.
+3. Credentials: Enter the Windows login and password of the remote PC.
+   * *Workgroup:* Just use the username.
+   * *Domain:* Use DOMAIN\username or .\username for local admin.
+4. Network Ports: If you are monitoring across different subnets, ensure your corporate routers allow traffic over TCP port 135 and the dynamic RPC range (49152–65535).
 
 ![WMI monitoring settings](Images/PCMonitoringsSettings.png)
 
@@ -575,6 +658,73 @@ A modal dialog for detecting external controller buttons:
 | **Local URL** | Link to the dashboard for this PC |
 | **LAN Addresses** | List of addresses for LAN access |
 
+### Control API
+
+| Parameter | Description |
+|-----------|-------------|
+| **Enable** | Activate the built-in HTTP Control API server |
+| **Port** | Port for the API server (1–65535); default `5101` |
+| **API Key** | Authentication key for HTTP requests — use **Generate** to create a random key, **Copy** to copy it to clipboard |
+| **Status** | Whether the API key is currently configured |
+| **Documentation** | Link to the full API reference |
+| **Stream Deck Plugin** | Install the VRC Control action plugin for Elgato Stream Deck |
+
+> When an API Key is configured, all HTTP requests must include the `X-Api-Key: {key}` header.
+
+#### HTTP Endpoints
+
+| Method | Endpoint | Body | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/status` | — | VRC server status, version, device count, and device list |
+| `GET` | `/api/devices` | — | List of all registered devices |
+| `GET` | `/api/devices/{id}` | — | Device info by ID |
+| `POST` | `/api/devices/{id}/command` | `ApiCommandRequest` | Execute a named command on the specified device |
+| `GET` | `/api/devices/{id}/commands` | — | Available commands for the device (grouped by category) |
+| `GET` | `/api/devices/{id}/commands/{category}/{function}/parameters` | — | Parameters for a specific function |
+| `POST` | `/api/shortcuts/execute` | `ApiShortcutExecuteRequest` | Execute a shortcut by external button ID |
+
+> **Audit logging:** `POST /api/shortcuts/execute` writes `CMD [External]` to the device audit log. `POST /api/devices/{id}/command` writes `CMD [API]` to the device audit log.
+
+**`GET /api/status` — response:**
+```json
+{
+  "isRunning": true,
+  "deviceCount": 2,
+  "version": "1.5.0",
+  "devices": [
+    { "id": "...", "name": "Studio A", "type": "vMix", "ipAddress": "192.168.1.10", "isConnected": true }
+  ]
+}
+```
+
+**`POST /api/devices/{id}/command` — request body:**
+```json
+{ "deviceId": "...", "commandName": "StartRecording", "parameters": null }
+```
+
+**`POST /api/shortcuts/execute` — request body:**
+```json
+{ "buttonId": "uuid-of-stream-deck-action" }
+```
+
+#### SignalR Hub (`/hubs/control`)
+
+| Direction | Method | Payload | Description |
+|-----------|--------|---------|-------------|
+| Server → Client | `ButtonFeedback` | `ApiButtonFeedback` | Button state update sent back to the external controller |
+| Server → Client | `ActivatorEvent` | `ApiActivatorEvent` | Real-time ACTS event broadcast (tally, audio levels, recording status) |
+| Client → Server | `IdentifyButton` | `buttonId` | Button identification request during shortcut setup |
+
+**`ButtonFeedback` payload:**
+```json
+{ "buttonKey": "91AC8", "isOn": true, "eventType": "Recording", "color": "#E53935" }
+```
+
+**`ActivatorEvent` payload:**
+```json
+{ "deviceId": "...", "eventType": "Input", "inputNumber": 3, "value": 1.0, "isOn": true }
+```
+
 ### Logs and Diagnostics
 
 ![Settings — logs and diagnostics](Images/SettingsLogs.png)
@@ -583,6 +733,58 @@ A modal dialog for detecting external controller buttons:
 |-----------|-------------|
 | **Device Logs** | Open the device log folder |
 | **GC Monitor** | Garbage collector monitoring status and logs |
+
+#### Log File Structure
+
+All log files are stored in the app's local data folder and are accessible via the **Device Logs** button.
+
+| File | Retention | Contents |
+|------|-----------|----------|
+| `{DeviceName}_{id}/audit-YYYYMMDD.log` | 30 days | Per-device audit: connections, state changes, ACTS events, operator commands |
+| `Updates/update-YYYYMMDD.log` | 90 days | Update history: check, download, install, errors with HRESULT codes |
+| `_system/gc-health-YYYYMMDD.log` | 30 days | .NET memory metrics: heap, working set, GC generation counters, fragmentation |
+| `_system/hw-monitor-YYYYMMDD.log` | 30 days | Hardware threshold events: CPU/GPU/disk alerts and recoveries |
+
+#### Per-device audit log (`audit-*.log`)
+
+| Event | Example entry |
+|-------|---------------|
+| **Connection** | `Connected (192.168.1.10:8099, Tcp)` |
+| **Reconnect / error** | `Reconnect (Reconnecting/Network): Host unreachable` |
+| **Disconnection** | `Disconnected (UserRequested)` |
+| **Initial snapshot** | `Snapshot Rec=False Stream=False Ext=False MC=False FS=False` |
+| **Lock / Unlock** | `🔓 Unlocked (Lock)` / `🔒 Locked (Lock)` |
+| **State change** | `Δ Recording: false → true Rec=—` |
+| **State change** | `Δ Streaming: true → false Rec=00:15:42` |
+| **ACTS event** | `ACTS Recording Value=1 Rec=00:15:42` |
+| **ACTS event** | `ACTS Overlay2 Input=13 Value=1 Rec=—` |
+| **UI button (intent)** | `CMD [Operator] Send: StartStopRecording Rec=—` |
+| **UI button (success)** | `CMD [Operator] Send: StartStopRecording -> OK` |
+| **UI button (error)** | `CMD [Operator] Send: StartStopStreaming -> ERROR: timeout` |
+| **Scheduler (success)** | `CMD [Timer] Send: StartRecording -> OK 'Morning Rec' (attempt 1/3)` |
+| **Scheduler (error)** | `CMD [Timer] Send: StartRecording -> ERROR: not connected 'Morning Rec' (attempt 2/3)` |
+| **Shortcut (success)** | `CMD [External] Send: StartRecording -> OK 'REC Button'` |
+| **Shortcut (error)** | `CMD [External] Send: StartRecording -> ERROR: timeout 'REC Button'` |
+
+#### Hardware threshold log (`_system/hw-monitor-*.log`)
+
+Writes only on threshold crossings — not on every poll cycle.
+
+| Threshold | Trigger condition |
+|-----------|-------------------|
+| **CPU** | Usage > 90% (crossed / recovered) |
+| **GPU** | Encode usage > 95% (crossed / recovered) |
+| **Disk** | Free < 10 GB or free < 10% (crossed / recovered) |
+
+Example entries:
+
+```
+WRN [192.168.1.10] CPU load crossed threshold: 92.3% (threshold 90%)
+INF [192.168.1.10] CPU load recovered: 74.5%
+WRN [192.168.1.10] GPU Encode load crossed threshold: 96.0% (threshold 95%)
+WRN [192.168.1.10] Disk C: free space dropped below threshold — 8.5 GB (6.2% free)
+INF [192.168.1.10] Disk C: free space recovered — 15.2 GB (11.4% free)
+```
 
 ### About
 
@@ -594,6 +796,14 @@ A modal dialog for detecting external controller buttons:
 | **Updates** | Check, download, and install updates with progress |
 | **Release Notes** | Link to the release page |
 | **Reset Settings** | Restore all settings to defaults |
+
+### ⌨️ Keyboard Shortcuts Reference
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+N` | Add a new vMix device |
+| `Ctrl+S` | Save current preset |
+| `Ctrl+Shift+S` | Save preset under a new name (Save As…) |
 
 ---
 
@@ -623,3 +833,36 @@ Built-in read-only dashboard accessible from any browser on the local network.
 - Dedicated **Scheduler** page for global management of all tasks.
 - Dedicated **Shortcuts** page for external controller button bindings.
 - Page caching — state is preserved when switching between sections.
+
+---
+
+<a id="faq"></a>
+## ❓ FAQ & Troubleshooting
+
+### VRC cannot connect to vMix
+- Verify that vMix is running and **Web Controller is enabled** (vMix Settings → Web Controller).
+- Double-check the IP address and port (default HTTP: `8088`, TCP: `8099`).
+- Ensure the Windows Firewall on the vMix machine allows inbound connections on that port.
+- Use the **Probe** button in the Add/Edit device dialog to test connectivity before saving.
+
+### Card buttons don’t respond to clicks
+- Controls are **locked by default** to prevent accidental on-air actions.
+- Click the **🔒 Lock icon** in the card footer to unlock the card.
+
+### WMI monitoring shows no data
+- Run the PowerShell setup scripts from VRC Settings → WMI (see [Section 4](#4-pc-health-monitoring)).
+- Use the correct credential format: Workgroup → `username`; Domain → `DOMAIN\username` or `.\username`.
+- Ensure TCP port `135` and the dynamic RPC range (`49152–65535`) are open on your network.
+
+### Certificate fails to install
+- Run the certificate installer as **Administrator** (right-click → Run as administrator).
+- Ensure you place it in **Local Machine → Trusted People** (not Current User).
+
+### Some indicators (Multicorder, Replay, GO) are missing
+- These features depend on your **vMix edition and version**.
+- Multicorder and Replay are only available in higher vMix editions.
+- The **GO** button requires **vMix v29+**; earlier versions show **QuickPlay** instead.
+
+### Notifications are not appearing
+- Check **Settings → Notifications** and ensure the mode is not set to *Off*.
+- Confirm Windows system notifications for VRC are allowed (Windows Settings → System → Notifications).
