@@ -127,7 +127,7 @@ The main screen of the application — a grid of connected device cards with rea
 ---
 
 
-![Dashboard](Images/Dashboard1.png)
+![Dashboard](Images/Win11.4K.png)
 
 ### Command Bar (Workspace Management)
 
