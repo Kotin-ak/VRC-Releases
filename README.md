@@ -17,7 +17,8 @@
 
 <br />
 
-### 📥 [Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases) | 🐛 [Report a Bug](https://github.com/Kotin-ak/VRC-Releases/issues)
+###  📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
+###  🐛 [Report a Bug](https://github.com/Kotin-ak/VRC-Releases/issues)
 
 </div>
 
