@@ -1,11 +1,25 @@
 > [!TIP]
 > 💡 **Please leave all your feedback on the project's [Issues page](https://github.com/Kotin-ak/VRC-Releases/issues). It is critical for the app's growth and improvement. VRC is a free tool, and your input helps me make it better for everyone. If it works perfectly on your machine, please let me know! For bug reports and feature requests, use GitHub tickets.**
 
-# VRC (Video Recording Control Hub)
-### Quick Links
+<div align="center">
 
-* 📥 **[Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases)**
-* 🐛 [Report a Bug / Issue](https://github.com/Kotin-ak/VRC-Releases/issues)
+# VRC (Video Recording Control Hub)
+
+<a href="https://github.com/Kotin-ak/VRC-Releases/releases">
+  <img src="https://img.shields.io/github/downloads/Kotin-ak/VRC-Releases/total?style=for-the-badge&color=2EA043&logo=github&logoColor=white" alt="Total Downloads" />
+</a>
+<a href="https://github.com/Kotin-ak/VRC-Releases/discussions">
+  <img src="https://img.shields.io/badge/GitHub_Discussions-181717?style=for-the-badge&logo=github&logoColor=white" alt="Discussions" />
+</a>
+<a href="https://youtube.com/@vrc-hub">
+  <img src="https://img.shields.io/badge/YouTube_Tutorials-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube" />
+</a>
+
+<br />
+
+### 📥 [Download Latest Release](https://github.com/Kotin-ak/VRC-Releases/releases) | 🐛 [Report a Bug](https://github.com/Kotin-ak/VRC-Releases/issues)
+
+</div>
 
 ### 🎬 Quick Demo
 
@@ -21,10 +35,20 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 
 *(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
 
+<br />
+
+### 🛠 Built With
+
+<p>
+  <img src="https://img.shields.io/badge/C%23_14-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" />
+  <img src="https://img.shields.io/badge/.NET_10-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt=".NET" />
+  <img src="https://img.shields.io/badge/WinUI_3-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="WinUI 3" />
+  <img src="https://img.shields.io/badge/XAML-0C54C2?style=for-the-badge&logo=xaml&logoColor=white" alt="XAML" />
+</p>
+
 ---
 
 ## 📋 Table of Contents
-
 > [!IMPORTANT]
 > **New to VRC? Start with the [📥 Installation Guide](#installation) before anything else.**
 
