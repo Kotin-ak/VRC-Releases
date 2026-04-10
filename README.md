@@ -1,3 +1,4 @@
+![VRC](Images/VRC.png)
 > [!TIP]
 > 💡 **Please leave all your feedback on the project's [Issues page](https://github.com/Kotin-ak/VRC-Releases/issues). It is critical for the app's growth and improvement. VRC is a free tool, and your input helps me make it better for everyone. If it works perfectly on your machine, please let me know! For bug reports and feature requests, use GitHub tickets.**
 
@@ -28,13 +29,16 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 
 ---
 
-**VRC** is a centralized Windows application designed to remotely monitor and control multiple vMix instances from a single dashboard. Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your vMix nodes:
+**VRC** is a centralized Windows application designed to remotely monitor and control multiple video production devices from a single dashboard. Stop jumping between different computers to manage your broadcast. With VRC, you have full remote command over your production nodes:
 
 * 🔴 **Full Remote Control:** Launch, stop, and manage Recording, Streaming, External outputs, and Multicorder with a single click or customizable keyboard shortcuts (ideal for Elgato Stream Deck).
 * 📊 **Deep Monitoring:** Track CPU/GPU performance and monitor available storage space in real-time via WMI to prevent recording failures.
-* ⏰ **Smart Automation:** Built-in Task Scheduler to automate your vMix commands based on precise timing.
+* ⏰ **Smart Automation:** Built-in Task Scheduler to automate device commands based on precise timing.
+* 🎛️ **Multi-Device Hub:** Support for **vMix** software mixers and **Blackmagic ATEM** hardware video switchers in a single workspace.
 
-*(Note: While the architecture is designed as a "Hub", the current release is heavily optimized for deep and stable integration exclusively with **vMix**).*
+> **Supported Devices:**
+> - **vMix** — deep integration via HTTP/TCP API (all editions).
+> - **Blackmagic ATEM** — hardware video switcher control via COM SDK (requires Blackmagic ATEM Software Control installation).
 
 <br />
 
@@ -83,6 +87,16 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
   - [8.6. About](#about)
 - [9. Web Dashboard](#9-web-dashboard) *(Optional)*
 - [10. Navigation](#10-navigation) *(Basic)*
+- **ATEM Support**
+- [11. ATEM Device Management](#11-atem-device-management) *(Basic)*
+- [12. ATEM Device Card](#12-atem-device-card) *(Basic)*
+  - [12.1. Header](#121-header-1)
+  - [12.2. Status Section](#122-status-section)
+  - [12.3. Program Monitor](#123-program-monitor-1)
+  - [12.4. Inputs Tab](#124-inputs-tab--input-control-1)
+  - [12.5. Scheduler Tab](#125-scheduler-tab--device-schedule-1)
+  - [12.6. Card Footer](#126-card-footer-1)
+- [13. ATEM Command Catalog](#13-atem-command-catalog) *(Advanced)*
 - [❓ FAQ & Troubleshooting](#faq)
 
 ---
@@ -108,7 +122,8 @@ VRC was built to solve this exact problem. It turns any Windows tablet or laptop
 | **Architecture** | x64 only |
 | **Runtime** | Windows App Runtime 2.0 *(bundled in the release package)* |
 | **vMix** | Any version · v29+ recommended for full feature support (GO button) |
-| **Network** | LAN access to vMix machines; default ports: HTTP `8088`, TCP `8099` |
+| **ATEM** | *(Optional)* **Blackmagic ATEM Software Control** must be installed on the VRC machine (provides the COM SDK). Any ATEM model supported |
+| **Network** | LAN access to devices. vMix: HTTP `8088`, TCP `8099`. ATEM: UDP `9910` (proprietary Blackmagic protocol) |
 | **WMI Monitoring** | *(Optional)* Windows credentials on each remote machine — see [Section 4](#4-pc-health-monitoring) |
 
 ---
@@ -163,6 +178,7 @@ The main screen of the application — a grid of connected device cards with rea
 | Action | Shortcut | Business Value / Description |
 |--------|----------|------------------------------|
 | **Add vMix** | `Ctrl+N` | Connect a new vMix node to your current workspace |
+| **Add ATEM** | — | Connect a new Blackmagic ATEM video switcher to your workspace |
 | **Last Session** | — | Quickly restore the exact machines you were monitoring when you last closed VRC |
 | **Save Preset** | `Ctrl+S` | Save your current grid of vMix machines to load them instantly next time |
 | **Card Size** | — | Adjust how much screen space each device card takes |
@@ -621,11 +637,21 @@ Configures visual feedback sent back to the external controller button.
 
 Available feedback events:
 
+**vMix devices:**
+
 | Category | Events |
 |----------|--------|
 | **Global** | Recording, Streaming, External, Fullscreen, FadeToBlack, MasterAudio, Bus A–G Audio |
 | **Input-bound** | Input (Program), InputPreview, InputPlaying, InputAudio, InputSolo, InputLoop, Input Bus routing (A–G, Master), InputAudioAuto |
 | **Overlays** | Overlay 1–8 |
+
+**ATEM devices:**
+
+| Category | Events |
+|----------|--------|
+| **Global** | Streaming, Recording, FadeToBlack, Transition, DSKOnAir |
+| **Input-bound** | InputProgram, InputPreview |
+| **HyperDeck** | HyperDeckRecord, HyperDeckPlay |
 
 #### Action Buttons
 
@@ -864,6 +890,189 @@ Built-in read-only dashboard accessible from any browser on the local network.
 
 ---
 
+## 11. ATEM Device Management
+
+> [!NOTE]
+> ATEM support requires **Blackmagic ATEM Software Control** to be installed on the VRC machine. The application provides COM SDK components that VRC uses to communicate with ATEM switchers. If the software is not installed, VRC will display a clear error message when attempting to connect.
+
+### Adding an ATEM Device
+
+Click **Add ATEM** on the Dashboard command bar to open the ATEM device addition dialog.
+
+| Field | Description |
+|-------|-------------|
+| **Name** | Custom device name (up to 20 characters) |
+| **IP Address** | IP address of the ATEM video switcher (default: `192.168.10.240`) |
+
+### Connectivity Check (Probe)
+
+Before saving, you can verify network reachability using the **Probe** button. Unlike vMix (which tests a TCP connection), the ATEM probe uses **ICMP ping**, since ATEM communicates over UDP and has no TCP listener.
+
+### Connection Options
+
+| Parameter | Description |
+|-----------|-------------|
+| **Auto-Connect** | Automatically connect to the switcher on application startup |
+| **Auto-Reconnect** | Automatically restore the connection when it is lost |
+
+### Connection Protocol
+
+VRC communicates with ATEM video switchers via the **Blackmagic COM SDK** on a dedicated STA thread (Single-Threaded Apartment). The protocol uses **UDP port 9910** (proprietary Blackmagic protocol). Connection is established with a 15-second timeout; disconnection — with a 5-second timeout.
+
+### Auto-Detection of Model
+
+Upon connection, VRC automatically reads the product name of the switcher (e.g., "ATEM Mini Extreme ISO", "ATEM Television Studio HD8 ISO") and displays it in the card header next to the device name.
+
+### Device Actions
+
+Available through the card context menu:
+
+- **Edit** — modify connection parameters (IP address, name).
+- **Logs** — view the device audit log.
+- **Delete** — remove the device from the configuration.
+- **Move to…** — move the device between groups.
+
+### Error Handling
+
+VRC provides clear localized error messages for common ATEM connection issues:
+
+| Condition | Error Message |
+|-----------|---------------|
+| **ATEM Software Control not installed** | Prompts the user to install the software (COM components missing) |
+| **Switcher not responding** | The ATEM switcher at the specified IP did not respond |
+| **Incompatible firmware** | The switcher firmware is incompatible with the installed SDK version |
+| **Connection timeout** | Connection timeout exceeded |
+| **COM error** | General COM interaction error with HRESULT details |
+
+---
+
+## 12. ATEM Device Card
+
+Each connected ATEM video switcher is displayed as a card with real-time status information and control, following the same card paradigm as vMix devices.
+
+> [!NOTE]
+> **Safety First:** As with vMix cards, all control actions are **LOCKED** by default. Click the **Lock (🔒)** icon in the card footer to unlock the card before sending commands.
+
+### 12.1. Header
+
+- Device name and IP address.
+- **Product name** — automatically detected switcher model (e.g., "ATEM Mini Extreme ISO").
+- Blackmagic brand indicator.
+- Color-coded connection status indicator (green = connected, gray = disconnected, animated = reconnecting).
+- **Context menu (⋯)** — edit, logs, delete, move between groups.
+
+### 12.2. Status Section
+
+The ATEM status section is a composite panel of up to 8 independent indicators. Each indicator is displayed only when the corresponding feature is available on the connected switcher model.
+
+> [!NOTE]
+> Feature availability depends on the ATEM switcher model and firmware. For example, Streaming and USB Recording are available only on models with a built-in encoder (ATEM Mini series). HyperDeck indicators appear only when HyperDecks are connected. Camera Recording requires Blackmagic cameras connected via SDI.
+
+Interactive indicators — clicking toggles the corresponding function:
+
+| Indicator | Click | Details |
+|-----------|-------|---------|
+| **Streaming** | Start/stop RTMP/SRT streaming | Duration timer, connection status. Available on ATEM Mini series and models with built-in encoder |
+| **Recording** | Start/stop USB recording | Per-disk indicators (Disk 1 / Disk 2). Duration timer. **Switch Disk** action available |
+| **HyperDeck** | Start/stop recording on all connected HyperDecks | Per-deck indicators (each clickable: Record / Stop / Play). Bulk actions Record All / Stop All |
+| **Camera Rec** | Start/stop recording on Blackmagic cameras via SDI | Per-camera indicators. Bulk actions Start All / Stop All. Uses SDI Camera Control Protocol v1.6.2 (VANC, embedded in SDI signal) |
+| **DSK** | Toggle Downstream Keyer on air | Per-key indicators (DSK 1, DSK 2, etc.). Each key toggleable individually. Auto-transition support |
+| **FTB** | Trigger Fade to Black | Per-M/E indicators. Rate and FullyBlack control |
+| **M/E** | Trigger transition (Cut / Auto) | Per-M/E block indicators. Program/Preview input display. Transition position control |
+| **Info** | — (read-only) | Current video mode (e.g., 1080p50, 2160p30). Real-time timecode display |
+
+### 12.3. Program Monitor
+
+Section displaying the current Program and Preview sources.
+
+- **M/E switcher** — select the Mix/Effect block (M/E 1, M/E 2, etc.) for multi-block switchers.
+- Display of current **Program** and **Preview** input names.
+- Real-time tally (red = Program, green = Preview).
+
+### 12.4. Inputs Tab — Input Control
+
+Paginated list of ATEM external inputs with tally indicators.
+
+#### Available for each input:
+
+| Action | Description |
+|--------|-------------|
+| **Program** | Send input to Program (red tally) |
+| **Preview** | Send input to Preview (green tally) |
+| **Cut** | Instant Cut transition to this input |
+| **Auto** | Auto transition to this input |
+
+- Color-coded tally border: **red** (in Program), **green** (in Preview).
+- Input name and type display.
+- Pagination for switchers with many inputs.
+
+### 12.5. Scheduler Tab — Device Schedule
+
+Compact list of scheduled tasks for the ATEM device (same layout as vMix scheduler tabs).
+
+- Display of upcoming tasks: time, function, parameters, status.
+- Time-until-next-task indicator.
+- **Open Scheduler** button — navigate to the full scheduler page.
+
+### 12.6. Card Footer
+
+| Element | Description |
+|---------|-------------|
+| **🔒 Lock** | Default state: ON. Protects against accidental actions. Click to toggle |
+| **🔔 Notifications** | Enable/disable notifications for this device (green — on, gray — off) |
+| **⚠ Errors** | Display of current connection errors (in red) |
+| **⏳ Spinner** | Loading indicator while an operation is in progress |
+| **🔘 Connection Toggle** | Enable/disable connection to the switcher |
+
+#### Built-in Command Feedback
+
+When a command is executed (via UI, scheduler, or shortcut), the card footer displays a brief feedback message:
+- **✓ CommandName** — success (auto-hides after 3 seconds).
+- **✗ CommandName: error** — error with details.
+
+#### Notifications
+
+The ATEM card supports Windows Toast notifications for critical state changes:
+
+| Category | Trigger |
+|----------|---------|
+| **Streaming** | Streaming started / stopped |
+| **Recording (Disk)** | USB recording started / stopped |
+| **Recording (HyperDeck)** | HyperDeck recording started / stopped |
+| **DSK** | Downstream Keyer on-air state change |
+| **Timecode** | Timecode-related events |
+
+---
+
+## 13. ATEM Command Catalog
+
+ATEM devices provide a full command catalog for use with the **Task Scheduler** and **Shortcuts**. Commands are organized into 8 categories:
+
+### Command Categories
+
+| Category | Functions | Parameters |
+|----------|-----------|------------|
+| **Mix Effect** | Cut, AutoTransition, SetProgramInput, SetPreviewInput, SetTransitionPosition | MeIndex, InputId, Position |
+| **Fade to Black** | FadeToBlack, SetFadeToBlackRate, SetFadeToBlackFullyBlack | MeIndex, Rate, FullyBlack |
+| **Downstream Key** | SetOnAir, ToggleOnAir, PerformAutoTransition, SetTie | DskIndex, OnAir, Tie |
+| **Camera Control** | StartRecording, StopRecording, StartRecordingForAllCameras, StopRecordingForAllCameras | Destination (camera address 0–254, broadcast 255) |
+| **HyperDeck** | Record, Stop, Play, RecordAll, StopAll | HyperDeckId |
+| **Streaming** | StartStreaming, StopStreaming | — |
+| **Recording** | StartRecording, StopRecording, SwitchDisk | — |
+| **Timecode** | ResetTimeCode | — |
+
+### ATEM Feedback Events (Shortcuts)
+
+When using ATEM devices with Shortcuts (external controller integration), the following feedback events are available:
+
+| Category | Events |
+|----------|--------|
+| **Global** | Streaming, Recording, FadeToBlack, Transition, DSKOnAir |
+| **Input-bound** | InputProgram, InputPreview |
+| **HyperDeck** | HyperDeckRecord, HyperDeckPlay |
+
+---
+
 <a id="faq"></a>
 ## ❓ FAQ & Troubleshooting
 
@@ -894,3 +1103,20 @@ Built-in read-only dashboard accessible from any browser on the local network.
 ### Notifications are not appearing
 - Check **Settings → Notifications** and ensure the mode is not set to *Off*.
 - Confirm Windows system notifications for VRC are allowed (Windows Settings → System → Notifications).
+
+### VRC cannot connect to the ATEM switcher
+- Ensure **Blackmagic ATEM Software Control** is installed on the VRC machine. VRC uses its COM SDK components to communicate with the switcher.
+- Verify the IP address (default ATEM IP: `192.168.10.240`).
+- Ensure UDP port `9910` is not blocked by a firewall between VRC and the switcher.
+- Use the **Probe** button (ICMP ping) to check network reachability before saving.
+- If you see "Incompatible firmware", update the ATEM firmware or ATEM Software Control to a compatible version.
+
+### ATEM features (Streaming, Recording, HyperDeck) are not displayed
+- Feature availability depends on **your ATEM switcher model**.
+- Streaming and USB Recording indicators are only shown for models with a built-in encoder (ATEM Mini series, etc.).
+- HyperDeck indicators appear only when HyperDecks are connected to the switcher.
+- Camera Recording requires Blackmagic cameras connected via SDI.
+
+### ATEM error "COM class not registered"
+- This means **ATEM Software Control** is not installed or its COM components were not registered correctly.
+- Reinstall Blackmagic ATEM Software Control and restart VRC.
