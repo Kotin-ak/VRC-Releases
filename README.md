@@ -1229,7 +1229,7 @@ If Replay Server's recording has stopped, the Watchdog **automatically sends `St
 | **Name** | All-node REC guard |
 | **Device** | Main Mix |
 | **Trigger** | `OnTransitionIn`, match by name: *(any — leave blank or use a common prefix)* |
-| **Conditions** | Recording = ON on **Main Mix**, Recording = ON on **Replay**, Recording = ON on **GFX** |
+| **Conditions** | Recording = ON on **Main Mix**, Recording = ON on **Recording**, Recording = ON on **GFX** |
 | **Logic** | All |
 | **Action** | Auto-Fix and Alert |
 
