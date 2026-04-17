@@ -97,6 +97,21 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
   - [12.5. Scheduler Tab](#125-scheduler-tab--device-schedule-1)
   - [12.6. Card Footer](#126-card-footer-1)
 - [13. ATEM Command Catalog](#13-atem-command-catalog) *(Advanced)*
+- **Watch Rules**
+- [14. Watch Rules (Watchdog)](#14-watch-rules-watchdog) *(Advanced)*
+  - [14.1. Rule Structure](#141-rule-structure)
+  - [14.2. Triggers](#142-triggers)
+  - [14.3. Conditions](#143-conditions)
+  - [14.4. Actions](#144-actions)
+  - [14.5. Cross-Device Monitoring](#145-cross-device-monitoring)
+  - [14.6. Examples](#146-examples)
+- **External Alerts**
+- [15. External Alert Channels](#15-external-alert-channels) *(Advanced · Optional)*
+  - [15.1. Supported Providers](#151-supported-providers)
+  - [15.2. Device & Category Filters](#152-device--category-filters)
+  - [15.3. Reliability: Retry & Circuit Breaker](#153-reliability-retry--circuit-breaker)
+  - [15.4. Health Monitor](#154-health-monitor)
+  - [15.5. Alert Delivery Log](#155-alert-delivery-log)
 - [❓ FAQ & Troubleshooting](#faq)
 
 ---
@@ -700,6 +715,7 @@ A modal dialog for detecting external controller buttons:
 | **Mode** | All / Critical / Broadcast / Off |
 | **Connection Notifications** | Alerts on device connect/disconnect |
 | **Silent Mode** | Suppress notification sounds |
+| **External Alert Channels** | Configure Telegram, Discord, Slack, Teams, and other external providers — see [Section 15](#15-external-alert-channels) |
 
 ### Web Dashboard
 
@@ -795,6 +811,7 @@ All log files are stored in the app's local data folder and are accessible via t
 | File | Retention | Contents |
 |------|-----------|----------|
 | `{DeviceName}_{id}/audit-YYYYMMDD.log` | 30 days | Per-device audit: connections, state changes, ACTS events, operator commands |
+| `Alerts/alerts-YYYYMMDD.log` | 30 days | External alert delivery: sent, failed (with retry attempts), circuit breaker open/close events |
 | `Updates/update-YYYYMMDD.log` | 90 days | Update history: check, download, install, errors with HRESULT codes |
 | `_system/gc-health-YYYYMMDD.log` | 30 days | .NET memory metrics: heap, working set, GC generation counters, fragmentation |
 | `_system/hw-monitor-YYYYMMDD.log` | 30 days | Hardware threshold events: CPU/GPU/disk alerts and recoveries |
@@ -1070,6 +1087,289 @@ When using ATEM devices with Shortcuts (external controller integration), the fo
 | **Global** | Streaming, Recording, FadeToBlack, Transition, DSKOnAir |
 | **Input-bound** | InputProgram, InputPreview |
 | **HyperDeck** | HyperDeckRecord, HyperDeckPlay |
+
+---
+
+<a id="watch-rules"></a>
+## 14. Watch Rules (Watchdog)
+
+The **Watchdog** is a real-time rule engine that monitors your vMix devices and reacts **instantly** when something goes wrong on air. Instead of relying on a human to notice that recording stopped or a stream dropped, the Watchdog catches it for you — and can even fix it automatically.
+
+> [!TIP]
+> **Why this matters:** In a multi-machine broadcast, the operator watching the main mix may not notice that a replay server stopped recording, or that a graphics node lost its stream. A single missed recording can mean hours of lost footage with no way to recover. The Watchdog eliminates this risk.
+
+**Currently supported devices:** vMix only.
+
+---
+
+### 14.1. Rule Structure
+
+Every watch rule answers three questions:
+
+| Component | Question | Example |
+|-----------|----------|---------|
+| **Trigger** | *WHEN to check?* | When the "Slate" input leaves Program |
+| **Conditions** | *WHAT should be true?* | Recording is ON, Streaming is ON |
+| **Action** | *WHAT to do if violated?* | Send alert / Auto-fix and alert |
+
+Additional parameters:
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| **Device** | All devices | Limit the trigger to a specific vMix instance, or leave blank for all |
+| **Condition Logic** | All | **All** = every condition must be met; **Any** = at least one must be met |
+| **Cooldown** | 30 sec | Minimum interval between repeated alerts for the same rule + device pair |
+| **Enabled** | Yes | Disabled rules are stored but not evaluated |
+
+---
+
+### 14.2. Triggers
+
+Triggers fire when a specific **input transition** happens in vMix:
+
+| Trigger | Fires when… |
+|---------|-------------|
+| `OnTransitionIn` | An input **enters** Program (PGM) |
+| `OnTransitionOut` | An input **leaves** Program (PGM) |
+| `OnOverlayIn` | An input **appears** in an Overlay channel (1–4+) |
+| `OnOverlayOut` | An input **disappears** from an Overlay channel (1–4+) |
+
+**Input matching** — three modes:
+
+| Mode | Match logic | Best for |
+|------|-------------|----------|
+| **By Name** | Case-insensitive substring of the input title | Naming conventions across machines (e.g. all slates named "Slate") |
+| **By Number** | Exact input number | Fixed input layouts |
+| **By Key** | Exact vMix input key (GUID) | Single-device rules with guaranteed uniqueness |
+
+For Overlay triggers, you can optionally specify the **channel number** (1–4+). Leave blank to match any overlay channel.
+
+---
+
+### 14.3. Conditions
+
+Conditions define the **expected state** of the device when the trigger fires:
+
+| Condition | Checks |
+|-----------|--------|
+| `Recording` | Recording is active |
+| `Streaming` | At least one stream channel is active |
+| `External` | External Output is enabled |
+| `Fullscreen` | Fullscreen output is enabled |
+| `MultiCorder` | MultiCorder is active |
+| `Master` | Master audio bus is NOT muted |
+
+Each condition has an **Expected State** (`true` = should be ON, `false` = should be OFF). If the actual device state doesn't match the expected state, the condition is **violated**.
+
+---
+
+### 14.4. Actions
+
+| Action | Behavior |
+|--------|----------|
+| **Send Alert** | Toast notification + external alert channels (Telegram, etc.) |
+| **Auto-Fix and Alert** | Automatically sends the corrective vMix command (e.g. `StartRecording`), then sends a notification confirming the fix |
+| **Execute Command** | Sends an arbitrary command from the vMix Command Catalog |
+
+> [!IMPORTANT]
+> **Auto-Fix** can save your broadcast. If the Watchdog detects that recording stopped on a replay node, it sends `StartRecording` before the operator even notices. The notification confirms the fix was applied — no footage lost.
+
+**Violation lifecycle:**
+1. Trigger fires → conditions evaluated → violation detected → action executed → `Violated` event.
+2. Violation stays **active** until all conditions are restored.
+3. When conditions recover → `Resolved` event → violation cleared.
+
+---
+
+### 14.5. Cross-Device Monitoring
+
+This is the Watchdog's most powerful feature. Each condition can target a **different device** than the one that fired the trigger.
+
+> **Scenario:** You have 3 vMix machines — Main Mix, Replay Server, and Graphics Node. You want to ensure that when the "Show Open" input goes to air on the Main Mix, **all three machines** are recording.
+
+How it works:
+- The **trigger** fires on Main Mix ("Show Open" enters PGM).
+- **Condition 1:** Recording = ON → checked on **Main Mix** (trigger device).
+- **Condition 2:** Recording = ON → checked on **Replay Server** (cross-device, via `TargetDeviceId`).
+- **Condition 3:** Recording = ON → checked on **Graphics Node** (cross-device).
+- **Logic:** All.
+- **Action:** Auto-Fix and Alert.
+
+If Replay Server's recording has stopped, the Watchdog **automatically sends `StartRecording`** to the Replay Server and notifies you. The Main Mix operator doesn't need to switch KVMs or check each machine manually.
+
+> [!NOTE]
+> Cross-device checks use the **last known state** of each device. If a target device is disconnected or has not yet sent its first state update, the condition is skipped (not treated as a violation).
+
+---
+
+### 14.6. Examples
+
+#### Example 1: "Ensure recording when going live"
+
+> *When the slate leaves PGM, recording and streaming must be ON — otherwise auto-fix.*
+
+| Field | Value |
+|-------|-------|
+| **Name** | Rec+Stream check — Main Mix |
+| **Device** | Main Mix |
+| **Trigger** | `OnTransitionOut`, match by name: `Slate` |
+| **Conditions** | Recording = ON, Streaming = ON |
+| **Logic** | All |
+| **Action** | Auto-Fix and Alert |
+| **Cooldown** | 30 sec |
+
+**Result:** The moment the operator cuts away from the slate, if recording or streaming is off, VRC starts them automatically and sends a toast + Telegram alert.
+
+#### Example 2: "Cross-device recording guard"
+
+> *When any input enters PGM on the Main Mix, verify all nodes are recording.*
+
+| Field | Value |
+|-------|-------|
+| **Name** | All-node REC guard |
+| **Device** | Main Mix |
+| **Trigger** | `OnTransitionIn`, match by name: *(any — leave blank or use a common prefix)* |
+| **Conditions** | Recording = ON on **Main Mix**, Recording = ON on **Replay**, Recording = ON on **GFX** |
+| **Logic** | All |
+| **Action** | Auto-Fix and Alert |
+
+**Result:** A single trigger on the Main Mix validates recording across the entire production. Any node that dropped recording gets restarted instantly.
+
+#### Example 3: "Muted master alert"
+
+> *When a specific camera goes to air, the master audio bus must not be muted.*
+
+| Field | Value |
+|-------|-------|
+| **Name** | Master unmute — Camera 1 |
+| **Trigger** | `OnTransitionIn`, match by name: `Camera 1` |
+| **Conditions** | Master = ON |
+| **Action** | Send Alert |
+| **Cooldown** | 60 sec |
+
+**Result:** If Camera 1 goes to PGM with master muted, the operator gets an immediate warning.
+
+---
+
+---
+
+<a id="external-alerts"></a>
+## 15. External Alert Channels
+
+VRC can send notifications not only as local Windows toasts but also to **external messaging services**. Every VRC notification (recording started, connection lost, Watchdog violation, audio muted, etc.) is automatically forwarded to all configured alert channels.
+
+This is managed by the **Composite Notification Service**, which wraps the local toast and dispatches alerts to external providers in parallel.
+
+> [!TIP]
+> **Use case:** You're away from the control desk (lunch break, setup in another room). A Telegram message on your phone tells you that the replay server lost its recording. You catch it in seconds, not after the show.
+
+---
+
+### 15.1. Supported Providers
+
+You can create **multiple instances** of the same provider type (e.g., two Telegram bots for different teams).
+
+| Provider | Transport | Setup required |
+|----------|-----------|----------------|
+| **Telegram** | Bot API | Bot token + Chat ID |
+| **Discord** | Webhook | Webhook URL |
+| **Slack** | Incoming Webhook | Webhook URL |
+| **Microsoft Teams** | Incoming Webhook | Webhook URL |
+| **VK Teams** | Bot API | Bot token + Chat ID |
+| **Yandex Messenger** | Bot API | Bot token + Chat ID |
+| **ntfy** | Push (ntfy.sh / self-hosted) | Server URL + Topic |
+| **Custom Webhook** | HTTP POST | Endpoint URL |
+
+Each provider instance has:
+- **Display Name** — a human-readable label for UI and logs (e.g., "TG — Sound Engineer").
+- **Enabled** toggle — disabled providers are stored but not used.
+- **Test** button — sends a test message to verify credentials before going live.
+
+---
+
+### 15.2. Device & Category Filters
+
+By default, a provider receives **all** notifications from **all** devices. You can narrow this with filters:
+
+| Filter level | What it does |
+|-------------|---------------|
+| **Device filter** | Select which devices send alerts to this provider |
+| **Category filter** (per device) | Select which event categories are forwarded (Recording, Streaming, Connection, WatchRuleViolation, Audio, etc.) |
+
+**Example:** "TG — Sound Engineer" receives only `AudioMasterMute` and `AudioBusMute` events from the Main Mix. No recording or connection spam.
+
+**Available categories:**
+
+| Category | Source |
+|----------|--------|
+| `Connection` | Device connect / disconnect |
+| `Recording` | Recording start / stop |
+| `Streaming` | Stream start / stop |
+| `MultiCorder` | MultiCorder start / stop |
+| `External` | External output on / off |
+| `Fullscreen` | Fullscreen output on / off |
+| `Replay` | Instant Replay events |
+| `PlayList` | Playlist events |
+| `Overlay` | Overlay in / out |
+| `AudioMasterMute` | Master bus mute / unmute |
+| `AudioBusMute` | Bus A–G mute / unmute |
+| `AudioBusSendToMaster` | Bus send-to-master on / off |
+| `AtemStreaming` | ATEM streaming start / stop |
+| `RecordingDisk` | ATEM USB recording |
+| `RecordingHyperDeck` | HyperDeck recording |
+| `Dsk` | Downstream Key on / off |
+| `Timecode` | Timecode reset |
+| `WatchRuleViolation` | Watchdog rule violations |
+
+---
+
+### 15.3. Reliability: Retry & Circuit Breaker
+
+External APIs can fail (network issues, rate limits, outages). VRC handles this automatically:
+
+| Mechanism | Behavior |
+|-----------|----------|
+| **Retry** | Transient errors (HTTP 5xx, 429, timeouts) are retried up to **2 times** with exponential backoff (2 s → 4 s) |
+| **No retry** | Client errors (HTTP 4xx except 429) fail immediately — usually a config problem |
+| **Serialization** | Each provider processes one alert at a time (FIFO queue). Prevents flooding external APIs (e.g., Telegram rate limits) |
+| **Circuit breaker** | After consecutive failures, the provider enters **Faulted** state — all alerts are skipped until the cooldown expires. This prevents log/network flooding when an API is down |
+| **Auto-recovery** | After the cooldown, the circuit breaker enters **Half-Open** — one test delivery is allowed. If it succeeds, the provider is restored to **Healthy** |
+
+---
+
+### 15.4. Health Monitor
+
+The **Alert Health Monitor** tracks delivery stats for every provider:
+
+| Metric | Description |
+|--------|-------------|
+| **State** | `Healthy` → `Degraded` → `Faulted` |
+| **Consecutive Failures** | Counter of failures in a row (resets on success) |
+| **Total Sent / Failed / Skipped** | Lifetime counters since app start |
+| **Last Success / Last Failure** | Timestamps (UTC) |
+| **Last Error** | Error message from the most recent failure |
+| **Circuit Open Until** | When the Faulted cooldown expires |
+
+The UI shows a health indicator for each provider. If any provider is **Faulted**, the settings page highlights it. You can manually **Reset** a provider to clear the circuit breaker.
+
+---
+
+### 15.5. Alert Delivery Log
+
+All external alert deliveries are logged to a dedicated file:
+
+| File | Retention | Contents |
+|------|-----------|----------|
+| `Logs/Alerts/alerts-YYYYMMDD.log` | 30 days | Sent, failed (with attempt count), circuit breaker open/close events |
+
+Example entries:
+```
+2026-01-15 14:32:01.123 [INF] Alert sent via 'TG — Director': "Main Mix" (Recording)
+2026-01-15 14:32:03.456 [WRN] Alert FAILED via 'Discord — Crew': "Replay" — 429 Too Many Requests (attempt 1/3)
+2026-01-15 14:32:05.789 [INF] Alert sent via 'Discord — Crew': "Replay" (Recording)
+2026-01-15 15:00:12.000 [ERR] Provider 'Webhook — Monitor' FAULTED after 5 consecutive failures. Circuit breaker opened for 300s.
+2026-01-15 15:05:12.100 [INF] Provider 'Webhook — Monitor' RESTORED — circuit breaker closed.
+```
 
 ---
 
