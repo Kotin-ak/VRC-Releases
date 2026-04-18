@@ -39,6 +39,8 @@ https://github.com/user-attachments/assets/7c67069e-30be-4646-a089-7777d7c0cc92
 > **Supported Devices:**
 > - **vMix** — deep integration via HTTP/TCP API (all editions).
 > - **Blackmagic ATEM** — hardware video switcher control via COM SDK (requires Blackmagic ATEM Software Control installation).
+!| Currently, VRC is officially tested and fully supported only on the ATEM 2 M/E Constellation HD. Compatibility with other ATEM models is provided on a best-effort basis, depending on user demand and access to physical hardware.
+
 
 <br />
 
