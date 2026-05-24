@@ -1127,7 +1127,7 @@ Additional parameters:
 
 ### 14.2. Triggers
 
-Triggers fire when a specific **input transition** happens in vMix:
+Triggers fire when a specific event or **transition** happens in vMix:
 
 | Trigger | Fires when… |
 |---------|-------------|
@@ -1135,6 +1135,8 @@ Triggers fire when a specific **input transition** happens in vMix:
 | `OnTransitionOut` | An input **leaves** Program (PGM) |
 | `OnOverlayIn` | An input **appears** in an Overlay channel (1–4+) |
 | `OnOverlayOut` | An input **disappears** from an Overlay channel (1–4+) |
+| `Start Stream` | A streaming channel **starts** broadcasting (can be a specific channel or any channel) |
+| `Stopp Stream` | A streaming channel **stops** broadcasting (can be a specific channel or any channel) |
 
 **Input matching** — three modes:
 
